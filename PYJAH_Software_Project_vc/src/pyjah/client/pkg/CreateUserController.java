@@ -7,6 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class CreateUserController {
@@ -19,6 +20,14 @@ public class CreateUserController {
 		
 		window.setScene(loginViewScene);
 		window.show();
+		
+	}
+	
+	public User newUserFieldsHandler(TextField usernameLine, TextField passwordLine) {
+		String username = usernameLine.getText();
+		String password = passwordLine.getText();
+		User user = new User();
+		return user;
 		
 	}
 }

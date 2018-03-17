@@ -7,28 +7,37 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
 public class User {
-	private String id;
+	private String username;
+	private String password;
 	private HashMap inbox;
 	private HashMap sentBox;
 
 	public User() {
-		this.id = id;
+		this.username = username;
 		this.inbox = inbox;
 		this.sentBox = sentBox;
 	}
 	
-	public User(String id) {
-		this.id = id;
+	public User(String username) {
+		this.username = username;
 	}
 	
-	public User(String id, HashMap inbox, HashMap sentBox) {
-		this.id = id;
+	public User(String username, String password) {
+		this.username = username;
+	}
+	
+	public User(String username, HashMap inbox, HashMap sentBox) {
+		this.username = username;
 		this.inbox = new HashMap(inbox);
 		this.sentBox = new HashMap(sentBox);
 	}
 	
-	public String getId() {
-		return id;
+	public String getUsername() {
+		return username;
+	}
+	
+	public String getPassword() {
+		return password;
 	}
 	
 	public HashMap getInbox() {
@@ -39,8 +48,12 @@ public class User {
 		return sentBox;
 	}
 	
-	public void setId(String id) {
-		this.id = id;
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	
+	public void setPassword(String password) {
+		this.password = password;
 	}
 	
 	public void setInbox(HashMap inbox) {
@@ -57,4 +70,5 @@ public class User {
 		messageFields.put("Message", messageBody.getText());
 
 	}
+
 }
