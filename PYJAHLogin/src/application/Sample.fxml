@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+
+<BorderPane xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.SampleController">
+   <center>
+      <Pane prefHeight="250.0" prefWidth="350.0" style="-fx-background-color: #50555b;" BorderPane.alignment="CENTER">
+         <children>
+            <JFXButton fx:id="login" buttonType="RAISED" layoutX="247.0" layoutY="90.0" onAction="#login" ripplerFill="#5863fd" style="-fx-background-color: #ffffff;" text="Login" />
+            <JFXButton fx:id="signup" buttonType="RAISED" layoutX="241.0" layoutY="149.0" onAction="#signup" ripplerFill="#5863fd" style="-fx-background-color: #ffffff;" text="Sign Up" />
+            <JFXTextField fx:id="username" layoutX="40.0" layoutY="90.0" promptText="Username" style="-fx-background-color: #ffffff;" />
+            <JFXPasswordField fx:id="password" layoutX="40.0" layoutY="149.0" promptText="Password" style="-fx-background-color: #ffffff;" />
+         </children></Pane>
+   </center>
+</BorderPane>
