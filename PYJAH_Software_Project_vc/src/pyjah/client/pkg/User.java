@@ -6,6 +6,12 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
+
+/*
+ * Class for creating a new user.  As of right now there are some fields which I think may
+ * be unneccesary or misplaced or unused in this class (inbox, sentbox) but maybe not.  Lets
+ * share ideas on next team meeting.  
+ */
 public class User {
 	private String username;
 	private String password;
@@ -24,6 +30,7 @@ public class User {
 	
 	public User(String username, String password) {
 		this.username = username;
+		this.password = password;
 	}
 	
 	public User(String username, HashMap inbox, HashMap sentBox) {
@@ -63,12 +70,11 @@ public class User {
 	public void setSentBox(HashMap sentBox) {
 		this.sentBox = sentBox;
 	}
-
-	public void sendMessage(HashMap messageFields, TextArea messageBody, TextField toLine, TextField subjectLine) {
-		messageFields.put("Recipient", toLine.getText());
-		messageFields.put("Subject", subjectLine.getText());
-		messageFields.put("Message", messageBody.getText());
-
+	
+	public String toString() {
+		return "User Name: " + username + "\nPassword: " + password;
 	}
+
+
 
 }

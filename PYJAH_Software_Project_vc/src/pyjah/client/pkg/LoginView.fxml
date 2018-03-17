@@ -8,8 +8,8 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pyjah.client.pkg.LoginController">
    <children>
-      <TextField layoutX="73.0" layoutY="86.0" prefHeight="25.0" prefWidth="454.0" promptText="Enter your username" />
-      <TextField layoutX="73.0" layoutY="175.0" prefHeight="25.0" prefWidth="454.0" promptText="Enter your password" />
+      <TextField layoutX="73.0" layoutY="86.0" prefHeight="25.0" prefWidth="454.0" promptText="Enter your username" fx:id="usernameLine"/>
+      <TextField layoutX="73.0" layoutY="175.0" prefHeight="25.0" prefWidth="454.0" promptText="Enter your password" fx:id="passwordLine" />
       <Label layoutX="73.0" layoutY="47.0" text="User Name:" />
       <Label layoutX="73.0" layoutY="140.0" prefHeight="17.0" prefWidth="62.0" text="Password:" />
       <Button layoutX="475.0" layoutY="344.0" mnemonicParsing="false" onAction="#handleLoginButtonClick" text="Login" />

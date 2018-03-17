@@ -15,14 +15,17 @@ import javafx.stage.Stage;
 
 
 public class LoginController {
-	@FXML private TextArea messageBody = new TextArea();
-	@FXML private TextField toLine = new TextField();
-	@FXML private TextField subjectLine = new TextField();
-	@FXML private Button loginButton = new Button();
+	
+	@FXML private TextField usernameLine;
+	@FXML private TextField passwordLine;
 	
 	
 	//Method to send the output from the GUI fields to a location
+	//Prints gui inputs and logs into the client.  Will need to send the input fields to the 
+	//server and add username and password authentication in this method.  
 	public void handleLoginButtonClick(ActionEvent event) throws IOException {
+		
+		System.out.println("UserName: " + usernameLine.getText() + "\nPassword: " + passwordLine.getText());
 		Parent clientViewParent = FXMLLoader.load(getClass().getResource("ClientView.fxml"));
 		Scene clientViewScene = new Scene(clientViewParent);
 		
@@ -33,6 +36,8 @@ public class LoginController {
 		
 	}
 	
+	
+	//Method to switch to the create user view with clicking the hyperlink
 	public void handleUserLinkClick(ActionEvent event) throws IOException {
 		Parent createUserViewParent = FXMLLoader.load(getClass().getResource("CreateUserView.fxml"));
 		Scene createUserViewScene = new Scene(createUserViewParent);

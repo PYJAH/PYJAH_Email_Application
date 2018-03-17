@@ -7,7 +7,6 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
 public class ClientController {
-	public User user = new User();
 	private HashMap messageFields = new HashMap();
 	@FXML private TextArea messageBody = new TextArea();
 	@FXML private TextField toLine = new TextField();
@@ -15,9 +14,13 @@ public class ClientController {
 	@FXML private Button sendButton = new Button();
 	
 	
-	//Method to send the output from the GUI fields to a location
+	//Method to send the input from the GUI fields to a location on button click.
+	// As of now it just prints the text fields inputted. 
 	public void handleSendButtonClick() {
-		user.sendMessage(messageFields, messageBody, toLine, subjectLine);
+		messageFields.put("Recipient", toLine.getText());
+		messageFields.put("Subject", subjectLine.getText());
+		messageFields.put("Message", messageBody.getText());
+
 		System.out.println("Recipient:\n" + messageFields.get("Recipient") +"\n\n" + "Subject:\n" + messageFields.get("Subject")
 							+ "\n\n" + "Message Body:\n" + messageFields.get("Message"));
 	}
