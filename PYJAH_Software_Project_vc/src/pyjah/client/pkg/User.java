@@ -75,6 +75,10 @@ public class User {
 		return "User Name: " + username + "\nPassword: " + password;
 	}
 
+	public HashMap inbox(HashMap map) {
+		HashMap hmap = new HashMap();
+		return hmap;
+	}
 
 
 }
