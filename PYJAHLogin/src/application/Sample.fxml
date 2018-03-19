@@ -5,15 +5,28 @@
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <BorderPane xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.SampleController">
    <center>
-      <Pane prefHeight="250.0" prefWidth="350.0" style="-fx-background-color: #50555b;" BorderPane.alignment="CENTER">
+      <Pane prefHeight="250.0" prefWidth="600.0" style="-fx-background-color: #ccced1;" BorderPane.alignment="CENTER">
          <children>
-            <JFXButton fx:id="login" buttonType="RAISED" layoutX="247.0" layoutY="90.0" onAction="#login" ripplerFill="#5863fd" style="-fx-background-color: #ffffff;" text="Login" />
-            <JFXButton fx:id="signup" buttonType="RAISED" layoutX="241.0" layoutY="149.0" onAction="#signup" ripplerFill="#5863fd" style="-fx-background-color: #ffffff;" text="Sign Up" />
-            <JFXTextField fx:id="username" layoutX="40.0" layoutY="90.0" promptText="Username" style="-fx-background-color: #ffffff;" />
-            <JFXPasswordField fx:id="password" layoutX="40.0" layoutY="149.0" promptText="Password" style="-fx-background-color: #ffffff;" />
+            <JFXButton fx:id="login" buttonType="RAISED" layoutX="377.0" layoutY="187.0" onAction="#login" ripplerFill="#4059a9" style="-fx-background-color: #ffffff;" text="Login">
+               <font>
+                  <Font name="Century Gothic" size="12.0" />
+               </font></JFXButton>
+            <JFXButton fx:id="signup" buttonType="RAISED" layoutX="454.0" layoutY="187.0" onAction="#signup" ripplerFill="#4059a9" style="-fx-background-color: #ffffff;" text="Sign Up" />
+            <JFXTextField fx:id="username" labelFloat="true" layoutX="377.0" layoutY="79.0" promptText="Username" style="-fx-background-color: #ffffff;" />
+            <JFXPasswordField fx:id="password" labelFloat="true" layoutX="377.0" layoutY="125.0" promptText="Password" style="-fx-background-color: #ffffff;">
+               <font>
+                  <Font name="Century Gothic" size="12.0" />
+               </font></JFXPasswordField>
+            <Text layoutX="49.0" layoutY="120.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome to PYJAH Messaging System!">
+               <font>
+                  <Font name="Century Gothic" size="16.0" />
+               </font>
+            </Text>
          </children></Pane>
    </center>
 </BorderPane>

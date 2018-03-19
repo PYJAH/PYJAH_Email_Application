@@ -11,6 +11,7 @@ import javafx.event.ActionEvent;
 
 
 public class SampleController implements Initializable {
+	
 	@FXML
     private JFXTextField username;
 
