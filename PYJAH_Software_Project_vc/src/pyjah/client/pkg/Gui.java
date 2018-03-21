@@ -17,6 +17,7 @@ public class Gui extends Application {
 	public void start(Stage primaryStage) {
 		try {
 			//login scene
+			
 			primaryStage.setTitle("PYJAH Email Client");
 			Parent root = FXMLLoader.load(getClass().getResource("LoginView.fxml"));
 			Scene login = new Scene(root);

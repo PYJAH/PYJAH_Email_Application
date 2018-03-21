@@ -1,4 +1,4 @@
-package pyjah.client.pkg;
+package pyjah.util.pkg;
 
 import java.util.*;
 

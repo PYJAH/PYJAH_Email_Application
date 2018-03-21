@@ -8,6 +8,7 @@ import javafx.scene.control.TextField;
 
 public class ClientController {
 	private HashMap messageFields = new HashMap();
+	private String user;
 	@FXML private TextArea messageBody = new TextArea();
 	@FXML private TextField toLine = new TextField();
 	@FXML private TextField subjectLine = new TextField();
@@ -25,5 +26,8 @@ public class ClientController {
 							+ "\n\n" + "Message Body:\n" + messageFields.get("Message"));
 	}
 	
+	public String getUser() {
+		return user;
+	}
 
 }
