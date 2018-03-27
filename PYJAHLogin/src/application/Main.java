@@ -1,5 +1,5 @@
 package application;
-	
+
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.FXML;
 import javafx.application.Application;

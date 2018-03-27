@@ -1,4 +1,7 @@
-/*This is the server class. It needs more updating from the file processing program*/
+/*				Modified and implemented by Ammanuel.
+ *This is the server class. It needs more updating from the file processing program, email class, and user class.
+ */
+
 package pyjah.server.pkg;
 
 import java.io.EOFException;
@@ -13,6 +16,7 @@ public class Server {
     private ObjectInputStream input;
     private ServerSocket server;
     private Socket connection;
+    //The message String will be changed to the message/email object and use the getters and setters to access the data.
     private String message;
     
     public Server() {
@@ -60,7 +64,11 @@ public class Server {
     	System.out.println("\n The streams are now set up.\n");
     }
 
-    //This method is what is going to handle the chat conversations
+    /* This method needs to modified for the message and user objects.
+     * 
+     * This method is going to ensure the streams are open and functional so that
+     * the message object and the user object is sent back and forth.
+     */   
     private void keepStreamsOpen() throws IOException{
     	message = "Server is now connected!";
     	//Display on the Server GUI
@@ -70,7 +78,9 @@ public class Server {
     	do{
     		//This where we show if there is any messages sent from the client
     		try {
-    			//The try method tries to get the input from the client and typecast it to String then display it through showMessage
+    			/* The try method tries to get the user objects from the client such as user name and password and,
+    			 *  implement to the filing processing system and display through the Server's GUI.
+    			 */    		
     			message = (String) input.readObject();
     			//Display on the Server GUI
     			System.out.println("\n" + message);
@@ -97,8 +107,9 @@ public class Server {
     }
 
     /*This method will send the message to client
-Changes this to a method that sends the email when to a user's inbox folder by writing to a file.
-Method name will become writeToInbox()*/
+     * Will modify this to a method that sends the email to a user's inbox folder by writing to a file.
+     * Method name will become writeToInbox()
+     */
 
     private void sendMessage(String message){
     	try {
