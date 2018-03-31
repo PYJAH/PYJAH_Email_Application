@@ -12,7 +12,7 @@
       <TextField fx:id="passwordLine" layoutX="73.0" layoutY="175.0" prefHeight="25.0" prefWidth="454.0" promptText="Please choose a password" />
       <Label layoutX="73.0" layoutY="47.0" text="User Name:" />
       <Label layoutX="73.0" layoutY="140.0" prefHeight="17.0" prefWidth="62.0" text="Password:" />
-      <Button fx:id="createAccount" layoutX="436.0" layoutY="344.0" mnemonicParsing="false" onAction="#handleCreateUserButtonClick" text="Create Account" />
+      <Button fx:id="createAccount" layoutX="436.0" layoutY="344.0" mnemonicParsing="false" onAction="#handleServerButtonClick" text="Create Account" />
       <Hyperlink fx:id="goBack" layoutX="75.0" layoutY="345.0" onAction="#handleGoBackLinkClick" text="&lt;- go back" />
    </children>
 </AnchorPane>
