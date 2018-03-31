@@ -126,6 +126,7 @@ public class Server {
     
     /*//These methods will utilize & implement the folder writing and tracking program
     //I was also thinking of creating an Email object
+     * 
     private void writeToInbox(Email email){
 
     }
