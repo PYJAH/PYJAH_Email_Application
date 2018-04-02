@@ -93,7 +93,7 @@ public class Server {
     }
 
     //This method will close the streams and sockets when we close the program or when a client exits
-    private void closeConnection(){
+    public void closeConnection(){
     	//Display on the Server GUI
     	System.out.println("\n Closing connections...\n");
     	//ableToType(false);

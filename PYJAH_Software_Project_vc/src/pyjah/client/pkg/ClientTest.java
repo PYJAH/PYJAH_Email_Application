@@ -9,7 +9,7 @@ package pyjah.client.pkg;
 */
 
 public class ClientTest {
-    public static void main (String[] args){
+   public static void main (String[] args){
         Client clientPYJAH = new Client("127.0.0.1");
         clientPYJAH.startClient();
     }
