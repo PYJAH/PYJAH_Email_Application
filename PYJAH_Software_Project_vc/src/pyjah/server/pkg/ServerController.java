@@ -41,7 +41,7 @@ public class ServerController implements Initializable {
 	 }
 
 		
-		/* public void handleServerButtonClick() {
+		 public void handleServerButtonClick() {
 			 Platform.runLater(new Runnable(){
 					@Override
 					public void run() {
@@ -50,7 +50,7 @@ public class ServerController implements Initializable {
 					}
 					});
 				
-		 }*/
+		 }
 
 
 		@Override
