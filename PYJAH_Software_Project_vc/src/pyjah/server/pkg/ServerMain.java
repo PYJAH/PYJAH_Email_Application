@@ -11,6 +11,7 @@ import javafx.stage.Stage;
 
 public class ServerMain extends Application {
 	
+	Server pyjahServer = new Server();
 	
 		@Override
 		public void start(Stage primaryStage) {
@@ -23,7 +24,7 @@ public class ServerMain extends Application {
 				primaryStage.setScene(login);
 				primaryStage.show();
 				
-				
+				thread1.start();
 				
 
 			} catch (Exception e) {
@@ -37,4 +38,10 @@ public class ServerMain extends Application {
 			launch(args);
 			
 		}
+		
+		Thread thread1 = new Thread () {
+			public void run () {
+				pyjahServer.startServer();
+			}
+		};
 }
