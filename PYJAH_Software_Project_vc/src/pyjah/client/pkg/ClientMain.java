@@ -11,7 +11,7 @@ import javafx.scene.layout.BorderPane;
 
 public class ClientMain extends Application {
 	
-	Client pyjahClient = new Client("127.0.0.1");
+	
 	
 	
 	@Override
@@ -25,7 +25,7 @@ public class ClientMain extends Application {
 			primaryStage.setScene(login);
 			primaryStage.show();
 			
-			thread1.start();
+			
 			
 
 		} catch (Exception e) {
@@ -38,10 +38,5 @@ public class ClientMain extends Application {
 
 	}
 	
-	Thread thread1 = new Thread () {
-		public void run () {
-			pyjahClient.startClient();
-		}
-	};
 	
 }

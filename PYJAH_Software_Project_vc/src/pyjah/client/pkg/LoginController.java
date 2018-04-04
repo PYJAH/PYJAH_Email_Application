@@ -1,10 +1,13 @@
 package pyjah.client.pkg;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -14,10 +17,12 @@ import javafx.scene.Node;
 import javafx.stage.Stage;
 
 
-public class LoginController {
+public class LoginController implements Initializable {
 	
 	@FXML private TextField usernameLine;
 	@FXML private TextField passwordLine;
+	
+	Client pyjahClient = new Client("127.0.0.1", usernameLine);
 	
 	
 	//Method to send the output from the GUI fields to a location
@@ -26,13 +31,14 @@ public class LoginController {
 	public void handleLoginButtonClick(ActionEvent event) throws IOException {
 		
 		System.out.println("UserName: " + usernameLine.getText() + "\nPassword: " + passwordLine.getText());
-		Parent clientViewParent = FXMLLoader.load(getClass().getResource("ClientView.fxml"));
+		pyjahClient.sendMessage(usernameLine.getText());
+		/*Parent clientViewParent = FXMLLoader.load(getClass().getResource("ClientView.fxml"));
 		Scene clientViewScene = new Scene(clientViewParent);
 		
 		Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
 		
 		window.setScene(clientViewScene);
-		window.show();
+		window.show();*/
 		
 	}
 	
@@ -46,5 +52,19 @@ public class LoginController {
 		
 		window.setScene(createUserViewScene);
 		window.show();
+	}
+	
+
+	Thread thread1 = new Thread () {
+		public void run () {
+			pyjahClient.startClient();
+		}
+	};
+
+
+	@Override
+	public void initialize(URL arg0, ResourceBundle arg1) {
+		thread1.start();
+		
 	}
 }

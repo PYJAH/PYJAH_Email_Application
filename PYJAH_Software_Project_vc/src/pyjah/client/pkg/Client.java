@@ -12,6 +12,8 @@ import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 
+import javafx.scene.control.TextField;
+
 public class Client {
 	
 	/*            IMPORTANT!  
@@ -24,14 +26,16 @@ public class Client {
     private String message2 = "";
     private String serverIP;
     private Socket connection;
+    private TextField userText;
     
     
     
     /* The constructor right now just takes the IP address needed for the client to connect to the server.
      * Since the server runs locally, it will connect to the local IP: 127.0.0.1.
      */   
-    public Client(String host) {
+    public Client(String host, TextField userText) {
     	this.serverIP=host;
+    	this.userText = userText;
     }
     
   //This method is going to be running the program
@@ -116,7 +120,7 @@ public class Client {
     }
 
     //send message to server
-    private void sendMessage(String message){
+    void sendMessage(String message){
         try{
             output.writeObject("CLIENT - " + message);
             output.flush();

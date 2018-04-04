@@ -19,10 +19,10 @@ import javafx.stage.Stage;
 
 public class ServerController implements Initializable {
 
-	@FXML private TextArea console;
+	@FXML TextArea console;
 	@FXML private Button sendButton;
 	@FXML private TextField textInput;
-	
+	Server pyjahServer = new Server(console);
 	
 	
 	
@@ -52,10 +52,17 @@ public class ServerController implements Initializable {
 				
 		 }
 
+		 
+		 Thread thread1 = new Thread () {
+				public void run () {
+					pyjahServer.startServer();
+				}
+			};
 
 		@Override
 		public void initialize(URL arg0, ResourceBundle arg1) {
-		
+			pyjahServer.setConsole(console);
+			thread1.start();
 			
 		}
 		 

@@ -11,6 +11,9 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import javafx.application.Platform;
+import javafx.scene.control.TextArea;
+
 public class Server {
     private ObjectOutputStream output;
     private ObjectInputStream input;
@@ -18,12 +21,29 @@ public class Server {
     private Socket connection;
     //The message String will be changed to the message/email object and use the getters and setters to access the data.
     private String message;
+    private TextArea console;
     
     public Server() {
     	this.message="";
+    	
+    	
+    }
+    
+    public Server(TextArea console) {
+    	this.console = console;
+    	this.message="";
+
     }
 
 
+    public TextArea getConsole() {
+    	return console;
+    }
+
+    
+    public void setConsole(TextArea console) {
+    	this.console = console;
+    }
 
 //The server is set up here
     public void startServer(){
@@ -83,6 +103,8 @@ public class Server {
     			 */    		
     			message = (String) input.readObject();
     			//Display on the Server GUI
+    			
+    			showMessage(message);
     			System.out.println("\n" + message);
     		} catch (ClassNotFoundException classNotFoundException){
     			//Display on the Server GUI
@@ -122,7 +144,8 @@ public class Server {
     		ioException.printStackTrace();
     	}
     }
-
+    
+   
     
     /*//These methods will utilize & implement the folder writing and tracking program
     //I was also thinking of creating an Email object
@@ -160,8 +183,20 @@ public class Server {
     				}
     			}
     			);
-    }
+    }*/
+    
+    
+     public void showMessage(final String message) {
+		 Platform.runLater(new Runnable(){
+				@Override
+				public void run() {
+				// Update your GUI here.
+					console.appendText(message);
+				}
+				});
+	 }
 
+     /*
     //This method is used to allow the user to be able to edit the presented the text area
     private void ableToType (final boolean tof){
     	SwingUtilities.invokeLater(
