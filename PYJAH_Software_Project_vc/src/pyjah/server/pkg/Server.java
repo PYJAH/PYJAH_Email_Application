@@ -11,6 +11,8 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import pyjah.util.pkg.Email;
+
 public class Server {
     private ObjectOutputStream output;
     private ObjectInputStream input;
@@ -82,8 +84,12 @@ public class Server {
     			 *  implement to the filing processing system and display through the Server's GUI.
     			 */    		
     			message = (String) input.readObject();
+    			Email email1 = (Email) input.readObject();
     			//Display on the Server GUI
+    			
     			System.out.println("\n" + message);
+    			System.out.println("\n" + email1);
+    			System.out.println("The status of the email is: " + email1.getStatus());
     		} catch (ClassNotFoundException classNotFoundException){
     			//Display on the Server GUI
     			System.out.println("\n I have no idea what the user sent!");

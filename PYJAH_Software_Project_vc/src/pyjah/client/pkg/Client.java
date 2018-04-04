@@ -12,6 +12,8 @@ import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 
+import pyjah.util.pkg.Email;
+
 public class Client {
 	
 	/*            IMPORTANT!  
@@ -77,7 +79,9 @@ public class Client {
     private void keepStreamsOpen() throws IOException{
         message = "Client is now connected!";
         message2 = "You are now connected to the server!";
+        Email email1 = new Email("Amman","The streams are open","Read");
         sendMessage(message);
+        sendEmail(email1);
         
     	//Display on the Client GUI
         System.out.println(message2);
@@ -122,6 +126,15 @@ public class Client {
             output.flush();
         }catch(IOException ioException){
             System.out.println("\nOops! Something went wrong!");
+        }
+    }
+    
+    public void sendEmail(Email email){
+        try{
+            output.writeObject(email);
+            output.flush();
+        }catch(IOException ioException){
+            System.out.println("\n Oops! Something went wrong!");
         }
     }
     
