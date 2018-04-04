@@ -25,11 +25,6 @@ public class ServerController implements Initializable {
 	Server pyjahServer = new Server(console);
 	
 	
-	
-	/*public void displayServerInfo() {
-		console.appendText("Welcome to Pyjah Server!");
-	}*/
-	
 	 public void displayText() {
 		 Platform.runLater(new Runnable(){
 				@Override

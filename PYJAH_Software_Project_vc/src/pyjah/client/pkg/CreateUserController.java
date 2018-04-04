@@ -74,4 +74,8 @@ public class CreateUserController {
 	public void sendUserInfo(User user) {
 		System.out.println(user.toString());
 	}
+	
+	public Client getConnection(Client pyClient) {
+		return pyClient;
+	}
 }

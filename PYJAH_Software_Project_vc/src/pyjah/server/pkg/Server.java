@@ -40,7 +40,7 @@ public class Server {
     	return console;
     }
 
-    
+    //Set the console so it doesnt point null
     public void setConsole(TextArea console) {
     	this.console = console;
     }
@@ -103,8 +103,8 @@ public class Server {
     			 */    		
     			message = (String) input.readObject();
     			//Display on the Server GUI
-    			
     			showMessage(message);
+    			
     			System.out.println("\n" + message);
     		} catch (ClassNotFoundException classNotFoundException){
     			//Display on the Server GUI
@@ -171,44 +171,20 @@ public class Server {
     private void sendInitialEmail(){
     	sendMessage("Welcome new user to the most coolest emailing system." + "\nFeel free to check the tabs and enjoy.");
     }
-
-   // These two showMessage and ableToType are both swing related methods, just kept them here to check if it's running properly
-    /* //This will actually display on the chat window
-    private void showMessage (final String windowMessage){
-    	SwingUtilities.invokeLater(
-    			new Runnable() {
-    				@Override
-    				public void run() {
-    					chatWindow.append(windowMessage);
-    				}
-    			}
-    			);
-    }*/
     
-    
+    //Append message to GUI
      public void showMessage(final String message) {
 		 Platform.runLater(new Runnable(){
 				@Override
 				public void run() {
 				// Update your GUI here.
 					console.appendText(message);
+					
 				}
 				});
 	 }
 
-     /*
-    //This method is used to allow the user to be able to edit the presented the text area
-    private void ableToType (final boolean tof){
-    	SwingUtilities.invokeLater(
-    			new Runnable() {
-    				@Override
-    				public void run() {
-    					chatWindow.setEditable(tof);
-    				}
-    			}
-    			);
-    }*/
-
+ 
 }
 
 

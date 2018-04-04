@@ -122,7 +122,7 @@ public class Client {
     //send message to server
     void sendMessage(String message){
         try{
-            output.writeObject("CLIENT - " + message);
+            output.writeObject(message + "\n");
             output.flush();
         }catch(IOException ioException){
             System.out.println("\nOops! Something went wrong!");
