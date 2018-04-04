@@ -11,12 +11,12 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-<<<<<<< HEAD
+//<<<<<<< HEAD
 import pyjah.util.pkg.Email;
-=======
+//=======
 import javafx.application.Platform;
 import javafx.scene.control.TextArea;
->>>>>>> ServerWork_Howie2
+//>>>>>>> ServerWork_Howie2
 
 public class Server {
     private ObjectOutputStream output;
@@ -97,30 +97,51 @@ public class Server {
     	message = "Server is now connected!";
     	//Display on the Server GUI
     	System.out.println(message);
-    	//ableToType(false);
+    	
 
     	do{
-    		//This where we show if there is any messages sent from the client
+    		
     		try {
     			/* The try method tries to get the user objects from the client such as user name and password and,
     			 *  implement to the filing processing system and display through the Server's GUI.
     			 */    		
     			message = (String) input.readObject();
-    			Email email1 = (Email) input.readObject();
+    			
+   
+    			
     			//Display on the Server GUI
-<<<<<<< HEAD
-=======
+
     			showMessage(message);
->>>>>>> ServerWork_Howie2
+
     			
     			System.out.println("\n" + message);
+    			
+    		} catch (ClassNotFoundException classNotFoundException){
+    			//Display on the Server GUI
+    			System.out.println("\n I have no idea what the user sent!");
+    		}
+    		//This where we show if there is any messages sent from the client
+    		/*try {
+    			/* The try method tries to get the user objects from the client such as user name and password and,
+    			 *  implement to the filing processing system and display through the Server's GUI.
+    			 *   		
+    			message = (String) input.readObject();
+    			
+   
+    			Email email1 = (Email) input.readObject();
+    			//Display on the Server GUI
+
+    			
+
+    			
+    			
     			System.out.println("\n" + email1);
     			System.out.println("The status of the email is: " + email1.getStatus());
     		} catch (ClassNotFoundException classNotFoundException){
     			//Display on the Server GUI
     			System.out.println("\n I have no idea what the user sent!");
-    		}
-
+    		}*/
+    		
     	} while (!(message.equals("CLIENT - END") || message.equals("CLIENT - end")));
     }
 

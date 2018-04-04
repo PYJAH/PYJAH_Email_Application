@@ -12,11 +12,11 @@ import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 
-<<<<<<< HEAD
+//<<<<<<< HEAD
 import pyjah.util.pkg.Email;
-=======
+//=======
 import javafx.scene.control.TextField;
->>>>>>> ServerWork_Howie2
+//>>>>>>> ServerWork_Howie2
 
 public class Client {
 	
@@ -87,7 +87,7 @@ public class Client {
         message2 = "You are now connected to the server!";
         Email email1 = new Email("Amman","The streams are open","Read");
         sendMessage(message);
-        sendEmail(email1);
+        //sendEmail(email1);
         
     	//Display on the Client GUI
         System.out.println(message2);
