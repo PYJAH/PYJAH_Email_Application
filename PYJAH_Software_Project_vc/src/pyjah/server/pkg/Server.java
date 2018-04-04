@@ -11,7 +11,12 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+<<<<<<< HEAD
 import pyjah.util.pkg.Email;
+=======
+import javafx.application.Platform;
+import javafx.scene.control.TextArea;
+>>>>>>> ServerWork_Howie2
 
 public class Server {
     private ObjectOutputStream output;
@@ -20,12 +25,29 @@ public class Server {
     private Socket connection;
     //The message String will be changed to the message/email object and use the getters and setters to access the data.
     private String message;
+    private TextArea console;
     
     public Server() {
     	this.message="";
+    	
+    	
+    }
+    
+    public Server(TextArea console) {
+    	this.console = console;
+    	this.message="";
+
     }
 
 
+    public TextArea getConsole() {
+    	return console;
+    }
+
+    //Set the console so it doesnt point null
+    public void setConsole(TextArea console) {
+    	this.console = console;
+    }
 
 //The server is set up here
     public void startServer(){
@@ -86,6 +108,10 @@ public class Server {
     			message = (String) input.readObject();
     			Email email1 = (Email) input.readObject();
     			//Display on the Server GUI
+<<<<<<< HEAD
+=======
+    			showMessage(message);
+>>>>>>> ServerWork_Howie2
     			
     			System.out.println("\n" + message);
     			System.out.println("\n" + email1);
@@ -128,7 +154,8 @@ public class Server {
     		ioException.printStackTrace();
     	}
     }
-
+    
+   
     
     /*//These methods will utilize & implement the folder writing and tracking program
     //I was also thinking of creating an Email object
@@ -154,32 +181,20 @@ public class Server {
     private void sendInitialEmail(){
     	sendMessage("Welcome new user to the most coolest emailing system." + "\nFeel free to check the tabs and enjoy.");
     }
+    
+    //Append message to GUI
+     public void showMessage(final String message) {
+		 Platform.runLater(new Runnable(){
+				@Override
+				public void run() {
+				// Update your GUI here.
+					console.appendText(message);
+					
+				}
+				});
+	 }
 
-   // These two showMessage and ableToType are both swing related methods, just kept them here to check if it's running properly
-    /* //This will actually display on the chat window
-    private void showMessage (final String windowMessage){
-    	SwingUtilities.invokeLater(
-    			new Runnable() {
-    				@Override
-    				public void run() {
-    					chatWindow.append(windowMessage);
-    				}
-    			}
-    			);
-    }
-
-    //This method is used to allow the user to be able to edit the presented the text area
-    private void ableToType (final boolean tof){
-    	SwingUtilities.invokeLater(
-    			new Runnable() {
-    				@Override
-    				public void run() {
-    					chatWindow.setEditable(tof);
-    				}
-    			}
-    			);
-    }*/
-
+ 
 }
 
 

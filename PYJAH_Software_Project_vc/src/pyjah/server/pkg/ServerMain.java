@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 public class ServerMain extends Application {
 	
 	
+	
 		@Override
 		public void start(Stage primaryStage) {
 			try {
@@ -22,7 +23,6 @@ public class ServerMain extends Application {
 				Scene login = new Scene(root);
 				primaryStage.setScene(login);
 				primaryStage.show();
-				
 				
 				
 
@@ -37,4 +37,6 @@ public class ServerMain extends Application {
 			launch(args);
 			
 		}
+		
+		
 }

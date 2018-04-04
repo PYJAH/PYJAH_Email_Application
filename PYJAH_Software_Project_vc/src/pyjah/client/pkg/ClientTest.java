@@ -1,5 +1,7 @@
 package pyjah.client.pkg;
 
+import javafx.scene.control.TextField;
+
 /*				Modified and implemented by Ammanuel.
  *					This is the ClientTest class.
  *
@@ -8,9 +10,11 @@ package pyjah.client.pkg;
  * from the client.
 */
 
+
 public class ClientTest {
+	static TextField userText;
    public static void main (String[] args){
-        Client clientPYJAH = new Client("127.0.0.1");
+        Client clientPYJAH = new Client("127.0.0.1", userText);
         clientPYJAH.startClient();
     }
 }

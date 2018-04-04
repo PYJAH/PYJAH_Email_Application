@@ -12,7 +12,11 @@ import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 
+<<<<<<< HEAD
 import pyjah.util.pkg.Email;
+=======
+import javafx.scene.control.TextField;
+>>>>>>> ServerWork_Howie2
 
 public class Client {
 	
@@ -26,14 +30,16 @@ public class Client {
     private String message2 = "";
     private String serverIP;
     private Socket connection;
+    private TextField userText;
     
     
     
     /* The constructor right now just takes the IP address needed for the client to connect to the server.
      * Since the server runs locally, it will connect to the local IP: 127.0.0.1.
      */   
-    public Client(String host) {
+    public Client(String host, TextField userText) {
     	this.serverIP=host;
+    	this.userText = userText;
     }
     
   //This method is going to be running the program
@@ -120,9 +126,9 @@ public class Client {
     }
 
     //send message to server
-    private void sendMessage(String message){
+    void sendMessage(String message){
         try{
-            output.writeObject("CLIENT - " + message);
+            output.writeObject(message + "\n");
             output.flush();
         }catch(IOException ioException){
             System.out.println("\nOops! Something went wrong!");

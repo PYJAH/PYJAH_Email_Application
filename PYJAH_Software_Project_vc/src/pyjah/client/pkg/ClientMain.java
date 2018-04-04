@@ -10,7 +10,8 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 
 public class ClientMain extends Application {
-
+	
+	
 	
 	
 	@Override
@@ -23,6 +24,7 @@ public class ClientMain extends Application {
 			Scene login = new Scene(root);
 			primaryStage.setScene(login);
 			primaryStage.show();
+			
 			
 			
 
