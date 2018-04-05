@@ -19,10 +19,10 @@ import javafx.scene.control.TextArea;
 
 
 public class Server {
-    private ObjectOutputStream output;
-    private ObjectInputStream input;
-    private ServerSocket server;
-    private Socket connection;
+    private static ObjectOutputStream output;
+    private static ObjectInputStream input;
+    private static ServerSocket server;
+    private static Socket connection;
     //The message String will be changed to the message/email object and use the getters and setters to access the data.
     private String message;
     private TextArea console;
@@ -102,10 +102,11 @@ public class Server {
 
     	do{
     		
+    		/*
     		try {
     			/* The try method tries to get the user objects from the client such as user name and password and,
     			 *  implement to the filing processing system and display through the Server's GUI.
-    			 */ 		
+    			 *		
     			message = (String) input.readObject();
     			
    
@@ -126,12 +127,12 @@ public class Server {
     		//This where we show if there is any messages sent from the client
     		
     		
-    		/*
+    		*/
     		
     		try {
     			/* The try method tries to get the user objects from the client such as user name and password and,
     			 *  implement to the filing processing system and display through the Server's GUI.
-    			 *
+    			 */
     			//message = (String) input.readObject();
 
     			email = (Email) input.readObject();
@@ -142,7 +143,7 @@ public class Server {
     		} catch (ClassNotFoundException classNotFoundException){
     			//Display on the Server GUI
     			System.out.println("\n I have no idea what the user sent!");
-    		}*/
+    		}
     		
     	} while (!(message.equals("CLIENT - END") || message.equals("CLIENT - end")));
     }
@@ -226,7 +227,10 @@ public class Server {
 				@Override
 				public void run() {
 				// Update your GUI here.
-					console.appendText("ehsdlkfjslkdjf");
+					console.appendText("Sent by: " + email.getSender() + "\n"
+							+ "Subject: " + email.getSubject() + "\n" + 
+							"Body: " + email.getBody()+"\n\n\n");
+					
 					
 				}
 				});

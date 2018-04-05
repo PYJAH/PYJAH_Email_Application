@@ -11,6 +11,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.util.Calendar;
+import java.util.Date;
 
 //<<<<<<< HEAD
 import pyjah.util.pkg.Email;
@@ -31,7 +33,9 @@ public class Client {
     private static final String serverIP = "127.0.0.1";
     private static Socket connection;
     private TextField userText;
-    private Email email;
+    private Calendar date;
+    private Email email; // = new Email("Howie", "Dude", "Test email", date, "Test Body boyyyyiiii", "Unread");
+    private User user;
     
     
     
@@ -61,6 +65,7 @@ public class Client {
             connectToServer();
             setupStreams();
             keepStreamsOpen();
+            //setUser("A");
         } catch (EOFException eofException){
 			//Need to display an error dialog box
             System.out.println("\n Client terminated connection");
@@ -100,8 +105,8 @@ public class Client {
         message = "Client is now connected!";
         message2 = "You are now connected to the server!";
        // Email email1 = new Email("Amman","The streams are open","Read");
-        sendMessage(message);
-       
+        //sendMessage(message);
+        sendEmail(email);
         
     	//Display on the Client GUI
         System.out.println(message2);
@@ -115,12 +120,12 @@ public class Client {
             	  * This method also will get(getBody()) the message from the Email object from the client and 
             	  *  type cast it to String then display it through the Client's GUI.
             	  */               
-            	 message = (String) input.readObject();
+            	//message = (String) input.readObject();
         		 
-        		// email = (Email) input.readObject();
-        		// sendEmail(email);
+        		 email = (Email) input.readObject();
+        		 //sendEmail(email);
              	//Display on the Client's GUI
-                 System.out.println("\n" + message);
+                 System.out.println("\n" +message);
              } catch (ClassNotFoundException classNotFoundException){
               	//Display on the Client's GUI
                  System.out.println("\n I have no idea what the user sent!");
@@ -159,6 +164,11 @@ public class Client {
         }catch(IOException ioException){
             System.out.println("\n Oops! Something went wrong!");
         }
+    }
+    
+    private void setUser(String username) {
+    	this.user.setUsername(username);
+    	this.email.setSender(username);
     }
     
 }

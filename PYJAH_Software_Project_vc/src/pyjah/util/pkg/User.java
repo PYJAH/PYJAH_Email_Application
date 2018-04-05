@@ -1,5 +1,7 @@
 package pyjah.util.pkg;
 
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.*;
 
 import javafx.fxml.FXML;
@@ -17,6 +19,7 @@ public class User {
 	private static String password;
 	private static HashMap inbox;
 	private static HashMap sentBox;
+	private Email email;
 	
 	public User() {
 		
@@ -84,6 +87,16 @@ public class User {
 		HashMap hmap = new HashMap();
 		return hmap;
 	}
+	
+	
+	 public void sendEmail(Email email, ObjectOutputStream output){
+	        try{
+	            output.writeObject(email);
+	            output.flush();
+	        }catch(IOException ioException){
+	            System.out.println("\n Oops! Something went wrong!");
+	        }
+	    }
 
 
 }

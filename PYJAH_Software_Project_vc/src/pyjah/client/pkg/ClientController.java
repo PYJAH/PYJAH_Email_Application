@@ -10,6 +10,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import pyjah.util.pkg.Email;
 
+
 public class ClientController implements Initializable {
 	private HashMap messageFields = new HashMap();
 	private User user;
@@ -17,15 +18,18 @@ public class ClientController implements Initializable {
 	@FXML private TextField toLine = new TextField();
 	@FXML private TextField subjectLine = new TextField();
 	@FXML private Button sendButton = new Button();
+	private Email email;
+	
+	
 	
 	Client pyjahClient = new Client();
 	
 	//Method to send the input from the GUI fields to a location on button click.
 	// As of now it just prints the text fields inputted. 
 	public void handleSendButtonClick() {
-		//Email email = new Email(toLine.getText(),subjectLine.getText(),messageBody.getText());
+		this.email = new Email(toLine.getText(),subjectLine.getText(),messageBody.getText());
 		
-		//pyjahClient.sendEmail(email);
+		pyjahClient.sendEmail(email);
 		
 		
 		/*
@@ -37,13 +41,13 @@ public class ClientController implements Initializable {
 							
 		*/	
 		
-		String sender;
+		/*String sender;
 		String recipient=toLine.getText();
 		String body=messageBody.getText();
 		String subject=subjectLine.getText();
 		pyjahClient.sendMessage(recipient);
 		pyjahClient.sendMessage(body);
-		pyjahClient.sendMessage(subject);
+		pyjahClient.sendMessage(subject);*/
 		
 	}
 	

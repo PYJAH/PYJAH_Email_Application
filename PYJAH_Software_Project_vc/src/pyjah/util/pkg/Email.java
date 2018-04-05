@@ -7,6 +7,8 @@
 package pyjah.util.pkg;
 
 import java.io.Serializable;
+import java.util.Calendar;
+import java.util.Date;
 
 
 public class Email implements Serializable {
@@ -14,12 +16,12 @@ public class Email implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = -2328129903740407780L;
-	private String sender;
+	private static String sender = "Howie";
 	private String recipient;
 	private String subject;
-	private double time;
+	private Calendar time;
 	private String body;
-	private String status;
+	private String status = "unread";
 	
 	/*
 	 *  Not sure if we still need this: HashMap email contents
@@ -43,7 +45,7 @@ public class Email implements Serializable {
 	}*/
 	
 
-	public Email(String sender, String recipient, String subject, double time, String body, String status) {
+	public Email(String sender, String recipient, String subject, Calendar time, String body, String status) {
 		super();
 		this.sender = sender;
 		this.recipient = recipient;
@@ -99,14 +101,14 @@ public class Email implements Serializable {
 	/**
 	 * @return the time
 	 */
-	public double getTime() {
+	public Calendar getTime() {
 		return time;
 	}
 
 	/**
 	 * @param time the time to set
 	 */
-	public void setTime(double time) {
+	public void setTime(Calendar time) {
 		this.time = time;
 	}
 
