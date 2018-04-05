@@ -14,7 +14,7 @@ import javafx.scene.control.TextField;
 public class ClientTest {
 	static TextField userText;
    public static void main (String[] args){
-        Client clientPYJAH = new Client("127.0.0.1", userText);
+        Client clientPYJAH = new Client();			//"127.0.0.1", userText
         clientPYJAH.startClient();
     }
 }

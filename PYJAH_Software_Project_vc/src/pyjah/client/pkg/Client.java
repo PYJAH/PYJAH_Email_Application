@@ -16,7 +16,7 @@ import java.net.Socket;
 import pyjah.util.pkg.Email;
 //=======
 import javafx.scene.control.TextField;
-//>>>>>>> ServerWork_Howie2
+
 
 public class Client {
 	
@@ -24,22 +24,35 @@ public class Client {
 	 *  The message and message2 String will be changed to the message/email 
 	    object and use the getters and setters to access the data.
 	 */
-	private ObjectInputStream input;
-    private ObjectOutputStream output;
+	private static ObjectInputStream input;
+    private static ObjectOutputStream output;
     private String message = "";
     private String message2 = "";
-    private String serverIP;
-    private Socket connection;
+    private static final String serverIP = "127.0.0.1";
+    private static Socket connection;
     private TextField userText;
+    private Email email;
     
     
     
     /* The constructor right now just takes the IP address needed for the client to connect to the server.
      * Since the server runs locally, it will connect to the local IP: 127.0.0.1.
-     */   
-    public Client(String host, TextField userText) {
+     */  
+    
+    
+    //Original Constructor*****
+    
+   /* public Client(String host, TextField userText) {
     	this.serverIP=host;
     	this.userText = userText;
+    }*/
+    
+    
+    
+    
+    public Client() {
+    	//this.serverIP = serverIP;
+    	this.connection = connection;
     }
     
   //This method is going to be running the program
@@ -63,6 +76,7 @@ public class Client {
     	//Display on the Client GUI
         System.out.println("Attempting connection \n");
         connection = new Socket(InetAddress.getByName(serverIP), 6789);
+        
       //Display on the Client GUI that it's connected to the host name by
         System.out.println("Connected to IP address: "+ connection.getInetAddress().getHostName());
 
@@ -85,9 +99,9 @@ public class Client {
     private void keepStreamsOpen() throws IOException{
         message = "Client is now connected!";
         message2 = "You are now connected to the server!";
-        Email email1 = new Email("Amman","The streams are open","Read");
+       // Email email1 = new Email("Amman","The streams are open","Read");
         sendMessage(message);
-        //sendEmail(email1);
+       
         
     	//Display on the Client GUI
         System.out.println(message2);
@@ -102,6 +116,9 @@ public class Client {
             	  *  type cast it to String then display it through the Client's GUI.
             	  */               
             	 message = (String) input.readObject();
+        		 
+        		// email = (Email) input.readObject();
+        		// sendEmail(email);
              	//Display on the Client's GUI
                  System.out.println("\n" + message);
              } catch (ClassNotFoundException classNotFoundException){

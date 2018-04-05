@@ -13,13 +13,18 @@ import javafx.scene.control.TextField;
  * share ideas on next team meeting.  
  */
 public class User {
-	private String username;
-	private String password;
-	private HashMap inbox;
-	private HashMap sentBox;
-
+	private static String username;
+	private static String password;
+	private static HashMap inbox;
+	private static HashMap sentBox;
+	
 	public User() {
+		
+	}
+
+	public User(String username, String password, HashMap inbox, HashMap sentBox) {
 		this.username = username;
+		this.password = password;
 		this.inbox = inbox;
 		this.sentBox = sentBox;
 	}

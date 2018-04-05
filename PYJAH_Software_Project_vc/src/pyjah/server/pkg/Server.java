@@ -11,12 +11,12 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-//<<<<<<< HEAD
+
 import pyjah.util.pkg.Email;
-//=======
+
 import javafx.application.Platform;
 import javafx.scene.control.TextArea;
-//>>>>>>> ServerWork_Howie2
+
 
 public class Server {
     private ObjectOutputStream output;
@@ -26,9 +26,10 @@ public class Server {
     //The message String will be changed to the message/email object and use the getters and setters to access the data.
     private String message;
     private TextArea console;
+    private Email email;
     
     public Server() {
-    	this.message="";
+    	this.email = null;
     	
     	
     }
@@ -104,7 +105,7 @@ public class Server {
     		try {
     			/* The try method tries to get the user objects from the client such as user name and password and,
     			 *  implement to the filing processing system and display through the Server's GUI.
-    			 */    		
+    			 */ 		
     			message = (String) input.readObject();
     			
    
@@ -120,23 +121,24 @@ public class Server {
     			//Display on the Server GUI
     			System.out.println("\n I have no idea what the user sent!");
     		}
+    		
+    		
     		//This where we show if there is any messages sent from the client
-    		/*try {
+    		
+    		
+    		/*
+    		
+    		try {
     			/* The try method tries to get the user objects from the client such as user name and password and,
     			 *  implement to the filing processing system and display through the Server's GUI.
-    			 *   		
-    			message = (String) input.readObject();
-    			
-   
-    			Email email1 = (Email) input.readObject();
+    			 *
+    			//message = (String) input.readObject();
+
+    			email = (Email) input.readObject();
     			//Display on the Server GUI
-
-    			
-
-    			
-    			
-    			System.out.println("\n" + email1);
-    			System.out.println("The status of the email is: " + email1.getStatus());
+    			showEmail(email);
+    //			System.out.println("\n" + email.toString());
+    			//System.out.println("The status of the email is: " + email1.getStatus());
     		} catch (ClassNotFoundException classNotFoundException){
     			//Display on the Server GUI
     			System.out.println("\n I have no idea what the user sent!");
@@ -144,6 +146,9 @@ public class Server {
     		
     	} while (!(message.equals("CLIENT - END") || message.equals("CLIENT - end")));
     }
+    
+    
+    
 
     //This method will close the streams and sockets when we close the program or when a client exits
     public void closeConnection(){
@@ -210,6 +215,18 @@ public class Server {
 				public void run() {
 				// Update your GUI here.
 					console.appendText(message);
+					
+				}
+				});
+	 }
+     
+   //Append message to GUI
+     public void showEmail(final Email email) {
+		 Platform.runLater(new Runnable(){
+				@Override
+				public void run() {
+				// Update your GUI here.
+					console.appendText("ehsdlkfjslkdjf");
 					
 				}
 				});

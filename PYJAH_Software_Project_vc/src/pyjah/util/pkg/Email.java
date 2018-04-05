@@ -25,17 +25,22 @@ public class Email implements Serializable {
 	 *  Not sure if we still need this: HashMap email contents
 	 */
 	
-	
-	public Email(String recipient, String subject, String status) {
+	public Email(String recipient, String subject, String body) {
+		this.recipient=recipient;
+		this.subject=subject;
+		this.body=body;
+		
+	}
+	/*public Email(String recipient, String subject, String status) {
 		/*		
 		 * This print statement is to check if the stream is receiving the Email object
 		 * System.out.println("The stream works.");
-		 */		
+		 *	
 		this.recipient = recipient;
 		this.subject = subject;
 		this.status = status;
 		
-	}
+	}*/
 	
 
 	public Email(String sender, String recipient, String subject, double time, String body, String status) {
@@ -138,7 +143,7 @@ public class Email implements Serializable {
 	}
 	
 	public String toString() {
-		return "The recipient is: "+getRecipient()+", "+"The subject is: "+getSubject();
+		return "The recipient is: "+getRecipient()+",\n "+"The subject is: "+getSubject() + "\n" + "Body: " + getBody();
 	}
 	
 

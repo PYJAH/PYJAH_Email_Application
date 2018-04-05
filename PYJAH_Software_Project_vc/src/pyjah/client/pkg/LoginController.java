@@ -21,8 +21,10 @@ public class LoginController implements Initializable {
 	private TextField usernameLine;
 	@FXML
 	private TextField passwordLine;
+	
+	
 
-	Client pyjahClient = new Client("127.0.0.1", usernameLine);
+	Client pyjahClient = new Client();
 
 	// Method to send the output from the GUI fields to a location
 	// Prints gui inputs and logs into the client. Will need to send the input
@@ -33,7 +35,6 @@ public class LoginController implements Initializable {
 		System.out.println("UserName: " + usernameLine.getText() + "\nPassword: " + passwordLine.getText());
 		pyjahClient.sendMessage(usernameLine.getText());
 		pyjahClient.sendMessage(passwordLine.getText());
-
 		usernameLine.clear();
 		passwordLine.clear();
 
@@ -55,8 +56,8 @@ public class LoginController implements Initializable {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("CreateUserView.fxml"));
 			Parent root = (Parent) loader.load();
 
-			//CreateUserController cuController = loader.getController();
-			//cuController.getConnection(pyjahClient);
+			CreateUserController cuController = loader.getController();
+			cuController.getConnection(pyjahClient);
 			Stage stage = new Stage();
 			stage.setScene(new Scene(root));
 			stage.show();
@@ -65,11 +66,11 @@ public class LoginController implements Initializable {
 		}
 	}
 
-	Thread thread1 = new Thread() {
+	/*Thread thread1 = new Thread() {
 		public void run() {
 			pyjahClient.startClient();
 		}
-	};
+	};*/
 
 	private void accessClient(ActionEvent event) throws IOException {
 		Parent clientViewParent = FXMLLoader.load(getClass().getResource("ClientView.fxml"));
@@ -83,7 +84,7 @@ public class LoginController implements Initializable {
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		thread1.start();
+		//thread1.start();
 
 	}
 }
