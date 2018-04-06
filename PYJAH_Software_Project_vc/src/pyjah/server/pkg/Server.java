@@ -227,7 +227,7 @@ public class Server {
 				@Override
 				public void run() {
 				// Update your GUI here.
-					console.appendText("Sent by: " + email.getSender() + "\n"
+					console.appendText("Sent by: " + email.getSender() + ", At " + email.getTime() + "\n"
 							+ "Subject: " + email.getSubject() + "\n" + 
 							"Body: " + email.getBody()+"\n\n\n");
 					

@@ -14,6 +14,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -22,7 +23,7 @@ public class ServerController implements Initializable {
 	@FXML TextArea console;
 	@FXML private Button sendButton;
 	@FXML private TextField textInput;
-	
+	@FXML private Label userIdLabel;
 	Server pyjahServer = new Server(console);
 	
 	

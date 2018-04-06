@@ -7,6 +7,8 @@
 package pyjah.util.pkg;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -16,10 +18,10 @@ public class Email implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = -2328129903740407780L;
-	private static String sender = "Howie";
+	private String sender;
 	private String recipient;
 	private String subject;
-	private Calendar time;
+	private String time;
 	private String body;
 	private String status = "unread";
 	
@@ -28,6 +30,14 @@ public class Email implements Serializable {
 	 */
 	
 	public Email(String recipient, String subject, String body) {
+		this.recipient=recipient;
+		this.subject=subject;
+		this.body=body;
+		
+	}
+	
+	public Email(String sender, String recipient, String subject, String body) {
+		this.sender = sender;
 		this.recipient=recipient;
 		this.subject=subject;
 		this.body=body;
@@ -45,7 +55,7 @@ public class Email implements Serializable {
 	}*/
 	
 
-	public Email(String sender, String recipient, String subject, Calendar time, String body, String status) {
+	public Email(String sender, String recipient, String subject, String body, String time,String status) {
 		super();
 		this.sender = sender;
 		this.recipient = recipient;
@@ -101,15 +111,21 @@ public class Email implements Serializable {
 	/**
 	 * @return the time
 	 */
-	public Calendar getTime() {
-		return time;
+	public String getTime() {
+		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		Date date = new Date();
+		return dateFormat.format(date); //2016/11/16 12:08:43
+
 	}
 
 	/**
 	 * @param time the time to set
 	 */
-	public void setTime(Calendar time) {
-		this.time = time;
+	public void setTime() {
+		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		Date date = new Date();
+		this.time = dateFormat.format(date); //2016/11/16 12:08:43
+
 	}
 
 
