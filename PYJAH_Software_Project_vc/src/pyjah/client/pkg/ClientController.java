@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 
 import java.net.URL;
 import java.util.*;
@@ -16,7 +17,8 @@ import javafx.scene.control.ToggleGroup;
 import pyjah.util.pkg.Email;
 
 public class ClientController implements Initializable {
-
+	@FXML
+	private TabPane tPane;
 	@FXML
 	private TextArea messageBody = new TextArea();
 	@FXML
@@ -34,14 +36,20 @@ public class ClientController implements Initializable {
 	@FXML
 	private Button loginButton;
 	@FXML
+	private Tab loginTab;
+	@FXML
 	private Tab composeTab;
 	@FXML
 	private Tab inboxTab;
 	@FXML
 	private Tab sentTab;
-	
+	@FXML
+	private Button logoutButton;
+
 	ToggleGroup group = new ToggleGroup();
 
+	
+	
 	private HashMap messageFields = new HashMap();
 	private User user;
 	private Email email;
@@ -50,7 +58,9 @@ public class ClientController implements Initializable {
 
 	// Method to send the input from the GUI fields to a location on button click.
 	// As of now it just prints the text fields inputted.
-	public void handleSendButtonClick() {
+	
+	@FXML
+	public void handleSendButtonClick(ActionEvent event) {
 		this.email = new Email(user.getUsername(), toLine.getText(), subjectLine.getText(), messageBody.getText());// ,
 																													// email.getTime(),
 																													// "Unread");
@@ -80,29 +90,16 @@ public class ClientController implements Initializable {
 
 	}
 
-	public void getUser() {
-		this.user = new User();
-		user.setUsername("Dude");
-		this.userIdLabel.setText(this.user.getUsername());
 
-	}
-
-	Thread thread1 = new Thread() {
-		public void run() {
-			pyjahClient.startClient();
-		}
-	};
-
-	public void setUserLabel() {
-		// this.user.setUsername("Dude");
-
-	}
 
 	@FXML
 	void loginOnButtonClick(ActionEvent event) {
 		composeTab.setDisable(false);
 		inboxTab.setDisable(false);
 		sentTab.setDisable(false);
+		tPane.getSelectionModel().select(composeTab);
+		loginTab.setDisable(true);
+
 	}
 
 	@FXML
@@ -123,12 +120,31 @@ public class ClientController implements Initializable {
 		this.userIdLabel.setText(this.user.getUsername());
 	}
 
+	@FXML
+	void backToLoginButtonClick(ActionEvent event) {
+		loginTab.setDisable(false);
+		tPane.getSelectionModel().select(loginTab);
+		composeTab.setDisable(true);
+		inboxTab.setDisable(true);
+		sentTab.setDisable(true);
+	}
+
+	
+	public void getUser() {
+		this.user = new User();
+		user.setUsername("Dude");
+		this.userIdLabel.setText(this.user.getUsername());
+
+	}
+
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1r) {
 		// user.setUsername("Dude");
 		// setUserLabel();
 
-		getUser();
+		// getUser();
+		
+		//testUser();
 
 	}
 

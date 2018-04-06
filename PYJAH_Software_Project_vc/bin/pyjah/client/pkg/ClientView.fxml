@@ -13,9 +13,9 @@
 
 <AnchorPane prefHeight="317.0" prefWidth="604.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pyjah.client.pkg.ClientController">
    <children>
-      <TabPane prefHeight="396.0" prefWidth="604.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane fx:id="tPane" prefHeight="396.0" prefWidth="604.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
-            <Tab text="Login">
+            <Tab text="Login" fx:id="loginTab">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -38,6 +38,7 @@
                         <Label layoutX="31.0" layoutY="93.0" text="Subject:" />
                         <Label layoutX="31.0" layoutY="149.0" text="Message Body:" />
                         <Label fx:id="userIdLabel" alignment="CENTER" layoutX="211.0" layoutY="14.0" prefHeight="17.0" prefWidth="138.0" text="Welcome to Pyjah Email " />
+                        <Button fx:id="logoutButton" layoutX="26.0" layoutY="327.0" mnemonicParsing="false" onAction="#backToLoginButtonClick" text="Logout" />
                      </children>
                   </AnchorPane>
             </content>
