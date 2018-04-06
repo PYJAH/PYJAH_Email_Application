@@ -13,7 +13,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.BorderPane;
 
 public class ClientMain extends Application {
-public ListView<String> subjects;	
+public ListView<String> subjectList;	
 	
 	@Override
 	public void start(Stage primaryStage) {
@@ -25,9 +25,7 @@ public ListView<String> subjects;
 			Scene login = new Scene(root);
 			primaryStage.setScene(login);
 			primaryStage.show();
-			
-			
-			
+							
 			
 			
 
