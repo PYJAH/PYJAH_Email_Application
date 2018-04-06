@@ -3,16 +3,17 @@ package pyjah.client.pkg;
 import javafx.*;
 
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ListView;
 import javafx.scene.layout.BorderPane;
 
 public class ClientMain extends Application {
-	
-	
-	
+public ListView<String> subjects;	
 	
 	@Override
 	public void start(Stage primaryStage) {
@@ -27,10 +28,15 @@ public class ClientMain extends Application {
 			
 			
 			
+			
+			
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	public void getMessages() {
+		
 	}
 
 	public static void main(String[] args) {

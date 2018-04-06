@@ -34,6 +34,7 @@ public class Client {
     
     
     
+    
     /* The constructor right now just takes the IP address needed for the client to connect to the server.
      * Since the server runs locally, it will connect to the local IP: 127.0.0.1.
      */   
