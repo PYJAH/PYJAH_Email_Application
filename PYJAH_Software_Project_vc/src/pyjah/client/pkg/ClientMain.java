@@ -39,6 +39,7 @@ public class ClientMain extends Application {
 	public static void main(String[] args) {
 		thread1.start();
 		launch(args);
+		pyjahClient.closeConnection();
 
 	}
 

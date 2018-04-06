@@ -133,13 +133,11 @@ public class Server {
     			/* The try method tries to get the user objects from the client such as user name and password and,
     			 *  implement to the filing processing system and display through the Server's GUI.
     			 */
-    			//message = (String) input.readObject();
-
+    			
     			email = (Email) input.readObject();
     			//Display on the Server GUI
     			showEmail(email);
-    //			System.out.println("\n" + email.toString());
-    			//System.out.println("The status of the email is: " + email1.getStatus());
+    		
     		} catch (ClassNotFoundException classNotFoundException){
     			//Display on the Server GUI
     			System.out.println("\n I have no idea what the user sent!");
@@ -187,6 +185,8 @@ public class Server {
     /*//These methods will utilize & implement the folder writing and tracking program
     //I was also thinking of creating an Email object
      * 
+     * 
+     * 
     private void writeToInbox(Email email){
 
     }
@@ -230,6 +230,7 @@ public class Server {
 					console.appendText("Sent by: " + email.getSender() + "\n"
 							+ "Subject: " + email.getSubject() + "\n" + 
 							"Body: " + email.getBody()+"\n\n\n");
+					
 					
 					
 				}

@@ -105,8 +105,9 @@ public class Client {
         message = "Client is now connected!";
         message2 = "You are now connected to the server!";
        // Email email1 = new Email("Amman","The streams are open","Read");
-        //sendMessage(message);
-        sendEmail(email);
+       //sendMessage(message);
+        
+       // sendEmail(email);
         
     	//Display on the Client GUI
         System.out.println(message2);
@@ -123,9 +124,10 @@ public class Client {
             	//message = (String) input.readObject();
         		 
         		 email = (Email) input.readObject();
+        		 sendEmail(email);
         		 //sendEmail(email);
              	//Display on the Client's GUI
-                 System.out.println("\n" +message);
+                 //System.out.println("\n" +message);
              } catch (ClassNotFoundException classNotFoundException){
               	//Display on the Client's GUI
                  System.out.println("\n I have no idea what the user sent!");
@@ -135,7 +137,7 @@ public class Client {
     }
 
     //Close connection
-    private void closeConnection(){
+     void closeConnection(){
         System.out.println("\nClosing the connection!");
         //ableToType(false);
         try{

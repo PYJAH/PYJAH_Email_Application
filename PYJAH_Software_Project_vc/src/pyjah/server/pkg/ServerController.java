@@ -48,16 +48,12 @@ public class ServerController implements Initializable {
 		 }
 
 		 
-		 Thread thread1 = new Thread () {
-				public void run () {
-					pyjahServer.startServer();
-				}
-			};
+		 
 
 		@Override
 		public void initialize(URL arg0, ResourceBundle arg1) {
 			pyjahServer.setConsole(console);
-			thread1.start();
+			
 			
 		}
 		 
