@@ -34,14 +34,10 @@ public class ServerMain extends Application {
 		}
 
 
-	static	Thread thread1 = new Thread () {
-			public void run () {
-				pyjahServer.startServer();
-			}
-		};
+	
 	
 		public static void main(String[] args) {
-			thread1.start();
+			
 			launch(args);
 			pyjahServer.closeConnection();
 		}
