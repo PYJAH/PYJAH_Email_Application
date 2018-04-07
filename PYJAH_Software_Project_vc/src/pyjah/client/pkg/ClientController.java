@@ -69,12 +69,13 @@ public class ClientController implements Initializable {
 	// As of now it just prints the text fields inputted.
 
 	
+//<<<<<<< HEAD
 	//Composes a new email object with appropriate fields.
 	@FXML
 	public void handleSendButtonClick(ActionEvent event) {
 		Email email = new Email(user.getUsername(), toLine.getText(), subjectLine.getText(), messageBody.getText());// ,
 		email.setTime();																											// email.getTime(),
-																													// "Unread");
+		// "Unread");
 		this.user.addToSentBox(email);
 		pyjahClient.sendUser(user);
 
@@ -91,15 +92,32 @@ public class ClientController implements Initializable {
 		 * messageFields.get("Message"));
 		 * 
 		 */
-
-		/*
-		 * String sender; String recipient=toLine.getText(); String
-		 * body=messageBody.getText(); String subject=subjectLine.getText();
-		 * pyjahClient.sendMessage(recipient); pyjahClient.sendMessage(body);
-		 * pyjahClient.sendMessage(subject);
-		 */
-
 	}
+
+//=======
+		
+//
+//			AMMAN: I BELIEVE THIS OLD ONE, I NEVER MADE ANY CHANGES IT TO IT
+//Method to send the input from the GUI fields to a location on button click.
+//	// As of now it just prints the text fields inputted. 
+//	public void handleSendButtonClick() {
+//		this.email = new Email(toLine.getText(),subjectLine.getText(),messageBody.getText());
+//		
+//		pyjahClient.sendEmail(email);
+//		/*
+//		 * Amman: I was thinking you could do this, instead of hard coding Sender names always
+//		 * 	email.setSender(getUser());
+//		 */
+//		
+//>>>>>>> Amman: I have figured out how to make sure the server detects if it's an email object or user object
+//		/*
+//		 * String sender; String recipient=toLine.getText(); String
+//		 * body=messageBody.getText(); String subject=subjectLine.getText();
+//		 * pyjahClient.sendMessage(recipient); pyjahClient.sendMessage(body);
+//		 * pyjahClient.sendMessage(subject);
+//		 */
+//
+//	}
 
 	@FXML
 	void loginOnButtonClick(ActionEvent event) {

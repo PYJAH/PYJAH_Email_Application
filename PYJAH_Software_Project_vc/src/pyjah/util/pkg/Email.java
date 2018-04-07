@@ -160,9 +160,17 @@ public class Email implements Serializable {
 		this.status = status;
 	}
 	
-	/*public String toString() {
+//<<<<<<< HEAD
+	public String toString() {
 		return "The recipient is: "+getRecipient()+"\n"+"The subject is: "+getSubject() + "\n" + "Body: " + getBody();
-	}*/
-	
+	}
+//=======
+
+
+//	public String toString() {
+//		return "The recipient is: "+getRecipient()+"\n "+"The subject is: "+getSubject() + "\n" + "Body:\n" + getBody();
+//	}
+//>>>>>>> Amman: I have figured out how to make sure the server detects if it's an email object or user object
+//	
 
 }
