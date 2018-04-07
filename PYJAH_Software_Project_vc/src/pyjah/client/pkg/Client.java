@@ -9,13 +9,17 @@ import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.util.Calendar;
 import java.util.Date;
 
+import org.apache.commons.lang.SerializationUtils;
+
 //<<<<<<< HEAD
 import pyjah.util.pkg.Email;
+import unused.User;
 //=======
 import javafx.scene.control.TextField;
 
@@ -122,10 +126,12 @@ public class Client {
             	  *  type cast it to String then display it through the Client's GUI.
             	  */               
             	//message = (String) input.readObject();
-        		 
+        		
         		 email = (Email) input.readObject();
         		 sendEmail(email);
-        		 //sendEmail(email);
+        		
+        		 
+        		
              	//Display on the Client's GUI
                  //System.out.println("\n" +message);
              } catch (ClassNotFoundException classNotFoundException){
@@ -161,7 +167,7 @@ public class Client {
     
     public void sendEmail(Email email){
         try{
-            output.writeObject(email);
+            output.writeObject(serializeEmail(email));
             output.flush();
         }catch(IOException ioException){
             System.out.println("\n Oops! Something went wrong!");
@@ -173,4 +179,13 @@ public class Client {
     	this.email.setSender(username);
     }
     
+    private byte[] serializeEmail(Email serEmail) {
+    	byte[]data = SerializationUtils.serialize(serEmail);
+        return data;
+    }
+    
+    private byte[] serializeUser(User serUser) {
+    	byte[]data = SerializationUtils.serialize((Serializable) serUser);
+        return data;
+    }
 }

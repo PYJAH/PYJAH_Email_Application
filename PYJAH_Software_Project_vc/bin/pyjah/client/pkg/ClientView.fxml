@@ -15,7 +15,7 @@
    <children>
       <TabPane fx:id="tPane" prefHeight="396.0" prefWidth="604.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
-            <Tab text="Login" fx:id="loginTab">
+            <Tab fx:id="loginTab" text="Login">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -51,12 +51,12 @@
                           <items>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                                  <children>
-                                    <ListView layoutX="-4.0" layoutY="-3.0" prefHeight="271.0" prefWidth="286.0" />
+                                    <ListView fx:id="inboxListView" layoutX="-4.0" layoutY="-3.0" prefHeight="271.0" prefWidth="286.0" />
                                  </children>
                               </AnchorPane>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                                  <children>
-                                    <TextArea layoutX="-1.0" layoutY="-1.0" prefHeight="266.0" prefWidth="284.0" />
+                                    <TextArea fx:id="inboxDisplayEmailTextArea" layoutX="-1.0" layoutY="-1.0" prefHeight="266.0" prefWidth="284.0" />
                                  </children>
                               </AnchorPane>
                           </items>

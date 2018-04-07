@@ -29,6 +29,9 @@ public class Email implements Serializable {
 	 *  Not sure if we still need this: HashMap email contents
 	 */
 	
+	public Email() {
+		
+	}
 	public Email(String recipient, String subject, String body) {
 		this.recipient=recipient;
 		this.subject=subject;
@@ -112,10 +115,7 @@ public class Email implements Serializable {
 	 * @return the time
 	 */
 	public String getTime() {
-		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-		Date date = new Date();
-		return dateFormat.format(date); //2016/11/16 12:08:43
-
+		return time;
 	}
 
 	/**
@@ -160,9 +160,9 @@ public class Email implements Serializable {
 		this.status = status;
 	}
 	
-	public String toString() {
-		return "The recipient is: "+getRecipient()+",\n "+"The subject is: "+getSubject() + "\n" + "Body: " + getBody();
-	}
+	/*public String toString() {
+		return "The recipient is: "+getRecipient()+"\n"+"The subject is: "+getSubject() + "\n" + "Body: " + getBody();
+	}*/
 	
 
 }

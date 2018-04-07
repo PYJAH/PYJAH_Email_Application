@@ -1,10 +1,12 @@
 package pyjah.client.pkg;
 
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -15,6 +17,8 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import pyjah.util.pkg.Email;
+import pyjah.util.pkg.User;
+//import unused.User;
 
 public class ClientController implements Initializable {
 	@FXML
@@ -46,10 +50,15 @@ public class ClientController implements Initializable {
 	@FXML
 	private Button logoutButton;
 
+	@FXML
+	private ListView<String> inboxListView;
+
 	ToggleGroup group = new ToggleGroup();
 
-	
-	
+	private ArrayList<Email> inboxAL = new ArrayList<Email>();
+	private ArrayList<Email> sentBoxAL = new ArrayList<Email>();
+
+	// private User currentUser;
 	private HashMap messageFields = new HashMap();
 	private User user;
 	private Email email;
@@ -58,11 +67,13 @@ public class ClientController implements Initializable {
 
 	// Method to send the input from the GUI fields to a location on button click.
 	// As of now it just prints the text fields inputted.
+
 	
+	//Composes a new email object with appropriate fields.
 	@FXML
 	public void handleSendButtonClick(ActionEvent event) {
 		this.email = new Email(user.getUsername(), toLine.getText(), subjectLine.getText(), messageBody.getText());// ,
-																													// email.getTime(),
+		email.setTime();																											// email.getTime(),
 																													// "Unread");
 
 		pyjahClient.sendEmail(email);
@@ -90,8 +101,6 @@ public class ClientController implements Initializable {
 
 	}
 
-
-
 	@FXML
 	void loginOnButtonClick(ActionEvent event) {
 		composeTab.setDisable(false);
@@ -99,6 +108,16 @@ public class ClientController implements Initializable {
 		sentTab.setDisable(false);
 		tPane.getSelectionModel().select(composeTab);
 		loginTab.setDisable(true);
+		
+		
+		
+		ArrayList<String> testList = new ArrayList<String>();
+		for (int i =0; i<user.getInboxAL().size(); i++) {
+			testList.add(user.getInboxAL().get(i).getSubject());
+		}
+
+        inboxListView.setItems(FXCollections.observableList(testList));
+
 
 	}
 
@@ -106,8 +125,8 @@ public class ClientController implements Initializable {
 	void radioSetToUserA(ActionEvent event) {
 		userARadioButton.setToggleGroup(group);
 		userARadioButton.setSelected(true);
-		this.user = new User();
-		user.setUsername("User A");
+		// this.user = new User();
+		// user.setUsername("User A");
 		this.userIdLabel.setText(this.user.getUsername());
 	}
 
@@ -129,7 +148,6 @@ public class ClientController implements Initializable {
 		sentTab.setDisable(true);
 	}
 
-	
 	public void getUser() {
 		this.user = new User();
 		user.setUsername("Dude");
@@ -137,15 +155,46 @@ public class ClientController implements Initializable {
 
 	}
 
+	
+	//Just a test user object to work on populating the list view
+	public User testUserA() {
+		User testUserA = new User();
+		Email test = new Email();
+		test.setSender("Howie");
+		test.setRecipient("John");
+		test.setSubject("Test email 1");
+		test.setTime();
+		test.setBody("Hello, this is a test email body message");
+		test.setStatus("unread");
+		
+		Email test2 = new Email();
+		test2.setSender("Howie");
+		test2.setRecipient("John");
+		test2.setSubject("Test email 1");
+		test2.setTime();
+		test2.setBody("Hello, this is a test email body message");
+		test2.setStatus("unread");
+		
+		
+		
+		testUserA.setSentboxAL(sentBoxAL);
+		testUserA.setInboxAL(inboxAL);
+		testUserA.setUsername("User A test");
+		testUserA.setPassword("123");
+		
+		testUserA.addToInbox(test);
+		testUserA.addToInbox(test2);
+		
+
+		return testUserA;
+
+	}
+
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1r) {
-		// user.setUsername("Dude");
-		// setUserLabel();
-
-		// getUser();
+		this.user = testUserA();
 		
-		//testUser();
-
+		
 	}
 
 }
