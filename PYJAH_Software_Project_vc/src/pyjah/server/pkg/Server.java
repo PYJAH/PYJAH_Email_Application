@@ -11,7 +11,7 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import org.apache.commons.lang.SerializationUtils;
+//import org.apache.commons.lang.SerializationUtils;
 
 import pyjah.util.pkg.Email;
 import pyjah.util.pkg.User;
@@ -140,6 +140,7 @@ public class Server {
     			 */
     			
     			//Amman: I added this implementation
+    			
     			Object obj = input.readObject();
 
     			if (obj.getClass()==Email.class) {
@@ -166,7 +167,7 @@ public class Server {
 					System.out.print(data[i]);
 				}
 				//System.out.println(data.toString());
-				this.user = (User) SerializationUtils.deserialize(data);
+				//this.user = (User) SerializationUtils.deserialize(data);
 				// Display on the Server GUI
 				showEmail(this.user.getSentboxAL().get(this.user.getSentboxAL().size()-1));
 
