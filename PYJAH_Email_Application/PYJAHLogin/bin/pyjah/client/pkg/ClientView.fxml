@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="317.0" prefWidth="604.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1"
+			fx:controller="pyjah.client.pkg.ClientController">
+   <children>
+      <TabPane prefHeight="396.0" prefWidth="604.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="Compose">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="394.0" prefWidth="611.0">
+                     <children>
+                        <TextField layoutX="29.0" layoutY="60.0" prefHeight="25.0" prefWidth="545.0" fx:id="toLine" />
+                        <TextField layoutX="29.0" layoutY="117.0" prefHeight="25.0" prefWidth="546.0" fx:id="subjectLine"/>
+                        <Button layoutX="539.0" layoutY="327.0" mnemonicParsing="false" text="Send" fx:id="sendButton" onAction="#handleSendButtonClick"/>
+                        <TextArea layoutX="28.0" layoutY="173.0" prefHeight="130.0" prefWidth="550.0" fx:id="messageBody"/>
+                        <Label layoutX="29.0" layoutY="34.0" text="To:" />
+                        <Label layoutX="31.0" layoutY="93.0" text="Subject:" />
+                        <Label layoutX="31.0" layoutY="149.0" text="Message Body:" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="Inbox">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <SplitPane dividerPositions="0.5007052186177715" layoutX="16.0" layoutY="29.0" prefHeight="265.0" prefWidth="569.0">
+                          <items>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                                 <children>
+                                    <ListView layoutX="-4.0" layoutY="-3.0" prefHeight="271.0" prefWidth="286.0" />
+                                 </children>
+                              </AnchorPane>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                                 <children>
+                                    <TextArea layoutX="-1.0" layoutY="-1.0" prefHeight="266.0" prefWidth="284.0" />
+                                 </children>
+                              </AnchorPane>
+                          </items>
+                        </SplitPane>
+                     </children></AnchorPane>
+            </content>
+          </Tab>
+            <Tab text="Sent">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <SplitPane dividerPositions="0.5007052186177715" layoutX="16.0" layoutY="29.0" prefHeight="265.0" prefWidth="569.0">
+                           <items>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                                 <children>
+                                    <ListView layoutX="-4.0" layoutY="-3.0" prefHeight="271.0" prefWidth="286.0" />
+                                 </children>
+                              </AnchorPane>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                                 <children>
+                                    <TextArea layoutX="-1.0" layoutY="-1.0" prefHeight="266.0" prefWidth="284.0" />
+                                 </children>
+                              </AnchorPane>
+                           </items>
+                        </SplitPane>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>
