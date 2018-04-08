@@ -139,7 +139,10 @@ public class Server {
     			 *  implement to the filing processing system and display through the Server's GUI.
     			 */
     			
-    			//Amman: I added this implementation
+    			//Amman: I added this implementation.
+    			
+//   			It checks if the current object in the stream is of a certain type of class. We will use this to send both an Email
+//    			and a User object at the same time.
     			
     			Object obj = input.readObject();
 
