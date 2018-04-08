@@ -7,6 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import pyjah.client.pkg.Client;
+import pyjah.util.pkg.Email;
 
 
 

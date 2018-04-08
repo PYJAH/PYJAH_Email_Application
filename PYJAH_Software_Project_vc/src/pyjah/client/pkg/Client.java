@@ -19,7 +19,7 @@ import org.apache.commons.lang.SerializationUtils;
 
 //<<<<<<< HEAD
 import pyjah.util.pkg.Email;
-import unused.User;
+import pyjah.util.pkg.User;
 //=======
 import javafx.scene.control.TextField;
 
@@ -127,8 +127,12 @@ public class Client {
             	  */               
             	//message = (String) input.readObject();
         		
-        		 email = (Email) input.readObject();
-        		 sendEmail(email);
+        		 
+        		 byte[] data = (byte[]) input.readObject();
+        		 
+        		 this.user = (User) SerializationUtils.deserialize(data);
+        		
+        		 sendUser(user);
         		
         		 
         		
@@ -168,6 +172,15 @@ public class Client {
     public void sendEmail(Email email){
         try{
             output.writeObject(serializeEmail(email));
+            output.flush();
+        }catch(IOException ioException){
+            System.out.println("\n Oops! Something went wrong!");
+        }
+    }
+    
+    public void sendUser(User user){
+        try{
+            output.writeObject(serializeUser(user));
             output.flush();
         }catch(IOException ioException){
             System.out.println("\n Oops! Something went wrong!");
