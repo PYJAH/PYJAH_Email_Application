@@ -28,7 +28,10 @@ public class User implements Serializable {
 	private boolean objectPopulated = false;
 	
 	public User() {
-		
+		/*this.username = "";
+		this.password = "";
+		this.inboxAL = new ArrayList<Email>();
+		this.sentboxAL = new ArrayList<Email>();*/
 	}
 
 	public User(String username, String password, HashMap inbox, HashMap sentBox) {

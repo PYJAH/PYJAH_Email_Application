@@ -106,6 +106,8 @@ public class ClientController implements Initializable {
 		composeTab.setDisable(false);
 		inboxTab.setDisable(false);
 		sentTab.setDisable(false);
+		//pyjahClient.sendUser(user);
+		//pyjahClient.setLoggedIn(true);
 		tPane.getSelectionModel().select(composeTab);
 		loginTab.setDisable(true);
 		
@@ -126,8 +128,8 @@ public class ClientController implements Initializable {
 		userARadioButton.setToggleGroup(group);
 		userARadioButton.setSelected(true);
 		this.user = testUserA();
-		// this.user = new User();
-		// user.setUsername("User A");
+	//	this.user = new User();
+	//	user.setUsername("User A");
 		this.userIdLabel.setText(this.user.getUsername());
 	}
 

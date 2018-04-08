@@ -8,8 +8,10 @@ import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 
 import org.apache.commons.lang.SerializationUtils;
 
@@ -29,6 +31,11 @@ public class Server {
 	private TextArea console;
 	//private Email email;
 	private User user;
+	private boolean loggedIn = false;
+	
+	private ArrayList<Email> inboxAL = new ArrayList<Email>();
+	private ArrayList<Email> sentBoxAL = new ArrayList<Email>();
+
 
 	public Server() {
 	//	this.email = null;
@@ -41,6 +48,8 @@ public class Server {
 
 	}
 
+	
+	//to connect the gui console to the server class
 	public TextArea getConsole() {
 		return console;
 	}
@@ -109,7 +118,21 @@ public class Server {
 				 * through the Server's GUI.
 				 */
 
-				byte[] data = (byte[]) input.readObject();
+
+				//
+				
+			/*	if(loggedIn == false) {
+					recieveUser();
+					retrieveUser();
+					loggedIn = true;
+				}else {
+					recieveUser();
+					
+				}*/
+				
+				
+				
+			    byte[] data = (byte[]) input.readObject();
 				
 				for(int i =0; i< data.length-1; i++) {
 					System.out.print(data[i]);
@@ -119,9 +142,13 @@ public class Server {
 				// Display on the Server GUI
 				
 				
-				
+			
 				
 				showEmail(this.user.getSentboxAL().get(this.user.getSentboxAL().size()-1));
+				
+				
+				
+				
 
 			} catch (ClassNotFoundException e) {
 				// Display on the Server GUI
@@ -165,6 +192,10 @@ public class Server {
 			ioException.printStackTrace();
 		}
 	}
+	
+	private void writeToInbox(Email email){
+		 User recipient = new User();
+    }
 
 	/*
 	 * //These methods will utilize & implement the folder writing and tracking
@@ -172,9 +203,7 @@ public class Server {
 	 * 
 	 * 
 	 * 
-	 * private void writeToInbox(Email email){
 	 * 
-	 * }
 	 * 
 	 * private void writeToSent(Email email){
 	 * 
@@ -222,12 +251,85 @@ public class Server {
 	}
 
 	
-	public User retrieveUser(User user) {
+	public void retrieveUser() {
 	//	user = (User) SerializationUtils.deserialize(data);
-		if(user.isObjectPopulated() == false) {
-			
-		}
 		
-		return user;
+			/* read the file where object byte array is stored
+			 * find file where title is = to string returned by user.getUsername()
+			 * scan the first or last byte[] that is where our user is stored
+			 * byte[] data = scanned byte array
+			 * 
+			 * user = (User) SerializationUtils.deserialize(data);
+			 *
+			 * return user;
+			 */
+		
+		this.user = testUserA();
+		sendUser(user);
+	}
+
+	public boolean isLoggedIn() {
+		return loggedIn;
+	}
+
+	public void setLoggedIn(boolean loggedIn) {
+		this.loggedIn = loggedIn;
+	}
+	
+	
+	//deconstructs a User object into a byte array 
+	 private byte[] serializeUser(User serUser) {
+	    	byte[]data = SerializationUtils.serialize((Serializable) serUser);
+	        return data;
+	    }
+	
+	 public void sendUser(User user){
+	        try{
+	            output.writeObject(serializeUser(user));
+	            output.flush();
+	        }catch(IOException ioException){
+	            System.out.println("\n Oops! Something went wrong!");
+	        }
+	    }
+	
+	 
+	 //to accept user objects being sent from the client
+	public void recieveUser(User user) throws ClassNotFoundException, IOException {
+   	 byte[] data = (byte[]) input.readObject();
+		 user = (User) SerializationUtils.deserialize(data);
+		 
+   }
+	
+	public User testUserA() {
+		User testUserA = new User();
+		Email test = new Email();
+		test.setSender("Howie");
+		test.setRecipient("John");
+		test.setSubject("Test email 1");
+		test.setTime();
+		test.setBody("Hello, this is a test email body message");
+		test.setStatus("unread");
+		
+		Email test2 = new Email();
+		test2.setSender("Howie");
+		test2.setRecipient("John");
+		test2.setSubject("Test email 1");
+		test2.setTime();
+		test2.setBody("Hello, this is a test email body message");
+		test2.setStatus("unread");
+		
+		
+		
+		testUserA.setSentboxAL(sentBoxAL);
+		testUserA.setInboxAL(inboxAL);
+		testUserA.setUsername("User A test");
+		testUserA.setPassword("123");
+		
+		testUserA.addToInbox(test);
+		testUserA.addToInbox(test2);
+		
+
+		return testUserA;
+
 	}
 }
