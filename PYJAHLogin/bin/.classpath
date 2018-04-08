@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<classpath>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry excluding="PYJAH_Software_Project_vc/src/|Software_Engineering_Project/src/|PYJAHLogin/src/" kind="src" path=""/>
-	<classpathentry kind="src" path="PYJAH_Software_Project_vc/src"/>
-	<classpathentry kind="src" path="PYJAHLogin/src"/>
-	<classpathentry kind="src" path="Software_Engineering_Project/src"/>
-	<classpathentry kind="output" path="PYJAHLogin/bin"/>
-</classpath>

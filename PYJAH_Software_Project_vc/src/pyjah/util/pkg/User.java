@@ -3,7 +3,7 @@ package pyjah.util.pkg;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.*;
-
+import java.io.Serializable;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -14,11 +14,16 @@ import javafx.scene.control.TextField;
  * be unneccesary or misplaced or unused in this class (inbox, sentbox) but maybe not.  Lets
  * share ideas on next team meeting.  
  */
-public class User {
+public class User implements Serializable {
+	
+	private static final long serialVersionUID = -169741550773849168L;
+
 	private static String username;
 	private static String password;
 	private static HashMap inbox;
 	private static HashMap sentBox;
+	private ArrayList<Email> inboxAL;
+	private ArrayList<Email> sentboxAL;
 	private Email email;
 	
 	public User() {
@@ -97,6 +102,32 @@ public class User {
 	            System.out.println("\n Oops! Something went wrong!");
 	        }
 	    }
+
+	
+	public ArrayList<Email> getInboxAL() {
+		return inboxAL;
+	}
+
+	public void setInboxAL(ArrayList<Email> inboxAL) {
+		this.inboxAL = inboxAL;
+	}
+	
+	public ArrayList<Email> getSentboxAL() {
+		return sentboxAL;
+	}
+
+	public void setSentboxAL(ArrayList<Email> sentboxAl) {
+		this.sentboxAL = sentboxAl;
+	}
+
+	
+	public void addToSentBox(Email email) {
+		this.sentboxAL.add(email);
+	}
+	
+	public void addToInbox(Email email) {
+		this.inboxAL.add(email);
+	}
 
 
 }
