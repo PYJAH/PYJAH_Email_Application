@@ -14,7 +14,7 @@ import java.net.Socket;
 import org.apache.commons.lang.SerializationUtils;
 
 import pyjah.util.pkg.Email;
-
+import pyjah.util.pkg.User;
 import javafx.application.Platform;
 import javafx.scene.control.TextArea;
 
@@ -28,6 +28,7 @@ public class Server {
 	private String message;
 	private TextArea console;
 	//private Email email;
+	private User user;
 
 	public Server() {
 	//	this.email = null;
@@ -109,9 +110,14 @@ public class Server {
 				 */
 
 				byte[] data = (byte[]) input.readObject();
-				Email email1 = (Email) SerializationUtils.deserialize(data);
+				
+				for(int i =0; i< data.length-1; i++) {
+					System.out.print(data[i]);
+				}
+				//System.out.println(data.toString());
+				this.user = (User) SerializationUtils.deserialize(data);
 				// Display on the Server GUI
-				showEmail(email1);
+				showEmail(this.user.getSentboxAL().get(this.user.getSentboxAL().size()-1));
 
 			} catch (ClassNotFoundException e) {
 				// Display on the Server GUI

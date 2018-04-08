@@ -61,7 +61,7 @@ public class ClientController implements Initializable {
 	// private User currentUser;
 	private HashMap messageFields = new HashMap();
 	private User user;
-	private Email email;
+	//private Email email;
 
 	Client pyjahClient = new Client();
 
@@ -72,11 +72,11 @@ public class ClientController implements Initializable {
 	//Composes a new email object with appropriate fields.
 	@FXML
 	public void handleSendButtonClick(ActionEvent event) {
-		this.email = new Email(user.getUsername(), toLine.getText(), subjectLine.getText(), messageBody.getText());// ,
+		Email email = new Email(user.getUsername(), toLine.getText(), subjectLine.getText(), messageBody.getText());// ,
 		email.setTime();																											// email.getTime(),
 																													// "Unread");
-
-		pyjahClient.sendEmail(email);
+		this.user.addToSentBox(email);
+		pyjahClient.sendUser(user);
 
 		toLine.clear();
 		subjectLine.clear();
@@ -125,6 +125,7 @@ public class ClientController implements Initializable {
 	void radioSetToUserA(ActionEvent event) {
 		userARadioButton.setToggleGroup(group);
 		userARadioButton.setSelected(true);
+		this.user = testUserA();
 		// this.user = new User();
 		// user.setUsername("User A");
 		this.userIdLabel.setText(this.user.getUsername());
@@ -192,7 +193,7 @@ public class ClientController implements Initializable {
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1r) {
-		this.user = testUserA();
+		//this.user = testUserA();
 		
 		
 	}
