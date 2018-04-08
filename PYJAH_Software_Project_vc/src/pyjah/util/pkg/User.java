@@ -18,13 +18,14 @@ public class User implements Serializable {
 	
 	private static final long serialVersionUID = -169741550773849168L;
 
-	private static String username;
-	private static String password;
-	private static HashMap inbox;
-	private static HashMap sentBox;
+	private String username;
+	private String password;
+	private HashMap inbox;
+	private HashMap sentBox;
 	private ArrayList<Email> inboxAL;
 	private ArrayList<Email> sentboxAL;
 	private Email email;
+	private boolean objectPopulated = false;
 	
 	public User() {
 		
@@ -127,6 +128,14 @@ public class User implements Serializable {
 	
 	public void addToInbox(Email email) {
 		this.inboxAL.add(email);
+	}
+
+	public boolean isObjectPopulated() {
+		return objectPopulated;
+	}
+
+	public void setObjectPopulated(boolean objectPopulated) {
+		this.objectPopulated = objectPopulated;
 	}
 
 

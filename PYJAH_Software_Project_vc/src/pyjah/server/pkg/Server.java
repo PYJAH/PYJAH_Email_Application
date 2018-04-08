@@ -117,6 +117,10 @@ public class Server {
 				//System.out.println(data.toString());
 				this.user = (User) SerializationUtils.deserialize(data);
 				// Display on the Server GUI
+				
+				
+				
+				
 				showEmail(this.user.getSentboxAL().get(this.user.getSentboxAL().size()-1));
 
 			} catch (ClassNotFoundException e) {
@@ -217,4 +221,13 @@ public class Server {
 		});
 	}
 
+	
+	public User retrieveUser(User user) {
+	//	user = (User) SerializationUtils.deserialize(data);
+		if(user.isObjectPopulated() == false) {
+			
+		}
+		
+		return user;
+	}
 }
