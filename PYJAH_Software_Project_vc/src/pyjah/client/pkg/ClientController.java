@@ -110,8 +110,8 @@ public class ClientController implements Initializable {
 
 	@FXML
 	void loginOnButtonClick(ActionEvent event) {
-		//pyjahClient.sendUser(user);
-		//pyjahClient.setLoggedIn(true);
+		pyjahClient.sendUser(user);
+		pyjahClient.setLoggedIn(true);
 		composeTab.setDisable(false);
 		inboxTab.setDisable(false);
 		sentTab.setDisable(false);

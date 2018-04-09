@@ -7,7 +7,7 @@ package pyjah.server.pkg;
  */
 
 public class ServerTest {
-    public static void main (String[] args){
+    public static void main (String[] args) throws ClassNotFoundException{
         Server PYJAH = new Server();
         PYJAH.startServer();
     }

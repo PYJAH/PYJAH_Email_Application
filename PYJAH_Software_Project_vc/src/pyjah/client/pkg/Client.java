@@ -37,8 +37,8 @@ public class Client {
 	private Calendar date;
 	private Email email; // = new Email("Howie", "Dude", "Test email", date, "Test Body boyyyyiiii",
 							// "Unread");
-	private User user;
-	private boolean loggedIn = true;
+	private User user=null;
+	private boolean loggedIn = false;
 
 	/*
 	 * The constructor right now just takes the IP address needed for the client to
@@ -107,15 +107,11 @@ public class Client {
 
 		// Display on the Client GUI
 		System.out.println(message2);
-		do {
-			if (loggedIn == false) {
 
-				this.user = new User();
-				this.user.setUsername("test");
-				sendUser(user);
-				loggedIn = true;
-
-			} else {
+		
+			
+			
+			do {
 
 				try {
 					/*
@@ -132,27 +128,23 @@ public class Client {
 					 * if(loggedIn==true){ sendUser(user); }
 					 */
 					// *************************************************************************
-					if (loggedIn == false) {
-						this.user = new User();
-						this.user.setUsername("test");
-						sendUser(user);
-						loggedIn = true;
-					} else {
 
-						byte[] data = (byte[]) input.readObject();
+					
+					
+					byte[] data = (byte[]) input.readObject();
 
-						this.user = (User) SerializationUtils.deserialize(data);
-
-						sendUser(user);
-					}
+					this.user = (User) SerializationUtils.deserialize(data);
+					
+					//sendUser(user);
 
 				} catch (ClassNotFoundException classNotFoundException) {
 					// Display on the Client's GUI
 					System.out.println("\n I have no idea what the user sent!");
+
 				}
 
-			}
-		} while (!message.equals("SERVER - END"));
+			} while (true);
+		
 
 	}
 
