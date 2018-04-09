@@ -52,6 +52,9 @@ public class ClientController implements Initializable {
 
 	@FXML
 	private ListView<String> inboxListView;
+	
+	@FXML
+	private ListView<String> sentboxListView;
 
 	ToggleGroup group = new ToggleGroup();
 
@@ -60,9 +63,10 @@ public class ClientController implements Initializable {
 
 	// private User currentUser;
 	private HashMap messageFields = new HashMap();
-	private User user;
+	private User user=null;
 	//private Email email;
-
+	
+	
 	Client pyjahClient = new Client();
 
 	// Method to send the input from the GUI fields to a location on button click.
@@ -78,9 +82,12 @@ public class ClientController implements Initializable {
 		this.user.addToSentBox(email);
 		pyjahClient.sendUser(user);
 
+		updateSentbox();
 		toLine.clear();
 		subjectLine.clear();
 		messageBody.clear();
+		
+		
 
 		/*
 		 * messageFields.put("Recipient", toLine.getText());
@@ -103,42 +110,43 @@ public class ClientController implements Initializable {
 
 	@FXML
 	void loginOnButtonClick(ActionEvent event) {
+		//pyjahClient.sendUser(user);
+		//pyjahClient.setLoggedIn(true);
 		composeTab.setDisable(false);
 		inboxTab.setDisable(false);
 		sentTab.setDisable(false);
-		//pyjahClient.sendUser(user);
-		//pyjahClient.setLoggedIn(true);
+		
 		tPane.getSelectionModel().select(composeTab);
 		loginTab.setDisable(true);
 		
 		
+		updateInbox();
+		updateSentbox();
 		
-		ArrayList<String> testList = new ArrayList<String>();
-		for (int i =0; i<user.getInboxAL().size(); i++) {
-			testList.add(user.getInboxAL().get(i).getSubject());
-		}
-
-        inboxListView.setItems(FXCollections.observableList(testList));
+		
 
 
 	}
 
 	@FXML
 	void radioSetToUserA(ActionEvent event) {
+		//System.out.println("raido");
 		userARadioButton.setToggleGroup(group);
 		userARadioButton.setSelected(true);
-		this.user = testUserA();
-	//	this.user = new User();
-	//	user.setUsername("User A");
+		//this.user = testUserA();
+		this.user = new User();
+		user.setUsername("User A");
 		this.userIdLabel.setText(this.user.getUsername());
 	}
 
 	@FXML
 	void radioSetToUserB(ActionEvent event) {
+		System.out.println("radio b");
 		userBRadioButton.setToggleGroup(group);
 		userBRadioButton.setSelected(true);
+		//this.user=testUserA();
 		this.user = new User();
-		user.setUsername("User B");
+	    user.setUsername("User B");
 		this.userIdLabel.setText(this.user.getUsername());
 	}
 
@@ -195,9 +203,26 @@ public class ClientController implements Initializable {
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1r) {
-		//this.user = testUserA();
 		
 		
+	}
+	
+	public void updateInbox() {
+		ArrayList<String> testList = new ArrayList<String>();
+		for (int i =0; i<user.getInboxAL().size(); i++) {
+			testList.add(user.getInboxAL().get(i).getSubject());
+		}
+
+        inboxListView.setItems(FXCollections.observableList(testList));
+	}
+	
+	public void updateSentbox() {
+		ArrayList<String> testList = new ArrayList<String>();
+		for (int i =0; i<user.getSentboxAL().size(); i++) {
+			testList.add(user.getSentboxAL().get(i).getSubject());
+		}
+
+        sentboxListView.setItems(FXCollections.observableList(testList));
 	}
 
 }

@@ -29,16 +29,15 @@ public class Server {
 	// getters and setters to access the data.
 	private String message;
 	private TextArea console;
-	//private Email email;
+	// private Email email;
 	private User user;
-	private boolean loggedIn = false;
-	
+	private boolean loggedIn = true;
+
 	private ArrayList<Email> inboxAL = new ArrayList<Email>();
 	private ArrayList<Email> sentBoxAL = new ArrayList<Email>();
 
-
 	public Server() {
-	//	this.email = null;
+		// this.email = null;
 
 	}
 
@@ -48,8 +47,7 @@ public class Server {
 
 	}
 
-	
-	//to connect the gui console to the server class
+	// to connect the gui console to the server class
 	public TextArea getConsole() {
 		return console;
 	}
@@ -118,45 +116,60 @@ public class Server {
 				 * through the Server's GUI.
 				 */
 
-
 				//
+
+				/*
+				 * if(loggedIn == false) { recieveUser(); retrieveUser(); loggedIn = true; }else
+				 * { recieveUser();
+				 * 
+				 * }
+				 */
+
+				// ********************************************************************************************************
+
 				
-			/*	if(loggedIn == false) {
-					recieveUser();
-					retrieveUser();
-					loggedIn = true;
-				}else {
-					recieveUser();
-					
-				}*/
-				
-				
-				
-			    byte[] data = (byte[]) input.readObject();
-				
-				for(int i =0; i< data.length-1; i++) {
-					System.out.print(data[i]);
-				}
-				//System.out.println(data.toString());
-				this.user = (User) SerializationUtils.deserialize(data);
-				// Display on the Server GUI
-				
-				
+				if(loggedIn == false) {
 			
+					byte[] data = (byte[]) input.readObject();
+					this.user = (User) SerializationUtils.deserialize(data);
+					retrieveUser();
+					sendUser(this.user);
+					loggedIn=true;
+				}else {
+					
+			
+					byte[] data = (byte[]) input.readObject();
+					this.user = (User) SerializationUtils.deserialize(data);
+					//fSystem.out.println(""+user.equals(this.user));
 				
-				showEmail(this.user.getSentboxAL().get(this.user.getSentboxAL().size()-1));
+
+					for (int i = 0; i < data.length - 1; i++) {
+						System.out.print(data[i]);
+					}
+					System.out.println("\n");
+					// System.out.println(data.toString());
+					
+					showEmail(this.user.getSentboxAL().get(this.user.getSentboxAL().size() - 1));
+					
+				}
+					
 				
-				
-				
-				
+
+				// **************************************************************************************************************
+
+				/*
+				 * if(loggedIn == false) { retrieveUser(); loggedIn = true; }else if(loggedIn ==
+				 * true) { recieveUser(); sendUser(user); }
+				 */
+
+				// showEmail(this.user.getSentboxAL().get(this.user.getSentboxAL().size()-1));
 
 			} catch (ClassNotFoundException e) {
 				// Display on the Server GUI
 				System.out.println("\n I have no idea what the user sent!");
 			}
 
-		} while (!(message.equals("CLIENT - END") ||
-				 message.equals("CLIENT - end"))); 
+		} while (!(message.equals("CLIENT - END") || message.equals("CLIENT - end")));
 
 	}
 
@@ -192,10 +205,10 @@ public class Server {
 			ioException.printStackTrace();
 		}
 	}
-	
-	private void writeToInbox(Email email){
-		 User recipient = new User();
-    }
+
+	private void writeToInbox(Email email) {
+		User recipient = new User();
+	}
 
 	/*
 	 * //These methods will utilize & implement the folder writing and tracking
@@ -250,20 +263,19 @@ public class Server {
 		});
 	}
 
-	
 	public void retrieveUser() {
-	//	user = (User) SerializationUtils.deserialize(data);
-		
-			/* read the file where object byte array is stored
-			 * find file where title is = to string returned by user.getUsername()
-			 * scan the first or last byte[] that is where our user is stored
-			 * byte[] data = scanned byte array
-			 * 
-			 * user = (User) SerializationUtils.deserialize(data);
-			 *
-			 * return user;
-			 */
-		
+		// user = (User) SerializationUtils.deserialize(data);
+
+		/*
+		 * read the file where object byte array is stored find file where title is = to
+		 * string returned by user.getUsername() scan the first or last byte[] that is
+		 * where our user is stored byte[] data = scanned byte array
+		 * 
+		 * user = (User) SerializationUtils.deserialize(data);
+		 *
+		 * return user;
+		 */
+
 		this.user = testUserA();
 		sendUser(user);
 	}
@@ -275,31 +287,34 @@ public class Server {
 	public void setLoggedIn(boolean loggedIn) {
 		this.loggedIn = loggedIn;
 	}
-	
-	
-	//deconstructs a User object into a byte array 
-	 private byte[] serializeUser(User serUser) {
-	    	byte[]data = SerializationUtils.serialize((Serializable) serUser);
-	        return data;
-	    }
-	
-	 public void sendUser(User user){
-	        try{
-	            output.writeObject(serializeUser(user));
-	            output.flush();
-	        }catch(IOException ioException){
-	            System.out.println("\n Oops! Something went wrong!");
-	        }
-	    }
-	
-	 
-	 //to accept user objects being sent from the client
-	public void recieveUser(User user) throws ClassNotFoundException, IOException {
-   	 byte[] data = (byte[]) input.readObject();
-		 user = (User) SerializationUtils.deserialize(data);
-		 
-   }
-	
+
+	// deconstructs a User object into a byte array
+	private byte[] serializeUser(User serUser) {
+		byte[] data = SerializationUtils.serialize((Serializable) serUser);
+		return data;
+	}
+
+	public void sendUser(User user) {
+		try {
+			output.writeObject(serializeUser(user));
+			output.flush();
+		} catch (IOException ioException) {
+			System.out.println("\n Oops! Something went wrong!");
+		}
+	}
+
+	// to accept user objects being sent from the client
+	public void recieveUser() throws ClassNotFoundException, IOException {
+		byte[] data = (byte[]) input.readObject();
+		this.user = (User) SerializationUtils.deserialize(data);
+
+		for (int i = 0; i < data.length - 1; i++) {
+			System.out.print(data[i]);
+		}
+		System.out.println("\n");
+
+	}
+
 	public User testUserA() {
 		User testUserA = new User();
 		Email test = new Email();
@@ -309,7 +324,7 @@ public class Server {
 		test.setTime();
 		test.setBody("Hello, this is a test email body message");
 		test.setStatus("unread");
-		
+
 		Email test2 = new Email();
 		test2.setSender("Howie");
 		test2.setRecipient("John");
@@ -317,17 +332,14 @@ public class Server {
 		test2.setTime();
 		test2.setBody("Hello, this is a test email body message");
 		test2.setStatus("unread");
-		
-		
-		
+
 		testUserA.setSentboxAL(sentBoxAL);
 		testUserA.setInboxAL(inboxAL);
 		testUserA.setUsername("User A test");
 		testUserA.setPassword("123");
-		
+
 		testUserA.addToInbox(test);
 		testUserA.addToInbox(test2);
-		
 
 		return testUserA;
 

@@ -22,9 +22,10 @@ public class User implements Serializable {
 	private String password;
 	private HashMap inbox;
 	private HashMap sentBox;
-	private ArrayList<Email> inboxAL;
-	private ArrayList<Email> sentboxAL;
+	private ArrayList<Email> inboxAL = new ArrayList<Email>();
+	private ArrayList<Email> sentboxAL = new ArrayList<Email>();
 	private Email email;
+	private User user;
 	private boolean objectPopulated = false;
 	
 	public User() {
@@ -54,6 +55,10 @@ public class User implements Serializable {
 		this.username = username;
 		this.inbox = new HashMap(inbox);
 		this.sentBox = new HashMap(sentBox);
+	}
+	
+	public void setUser(User user) {
+		this.user = user;
 	}
 	
 	public String getUsername() {

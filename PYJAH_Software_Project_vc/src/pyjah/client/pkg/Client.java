@@ -16,10 +16,9 @@ import java.util.Date;
 
 import org.apache.commons.lang.SerializationUtils;
 
-//<<<<<<< HEAD
 import pyjah.util.pkg.Email;
 import pyjah.util.pkg.User;
-//=======
+
 import javafx.scene.control.TextField;
 
 public class Client {
@@ -39,7 +38,7 @@ public class Client {
 	private Email email; // = new Email("Howie", "Dude", "Test email", date, "Test Body boyyyyiiii",
 							// "Unread");
 	private User user;
-	private boolean loggedIn = false;
+	private boolean loggedIn = true;
 
 	/*
 	 * The constructor right now just takes the IP address needed for the client to
@@ -108,35 +107,53 @@ public class Client {
 
 		// Display on the Client GUI
 		System.out.println(message2);
-
 		do {
+			if (loggedIn == false) {
 
-			try {
-				/*
-				 * The try method will send the user name and password to the server to get it
-				 * verified. This method also will get(getBody()) the message from the Email
-				 * object from the client and type cast it to String then display it through the
-				 * Client's GUI.
-				 */
-
-				/*
-				 * recieveUser();
-				 * 
-				 * if(loggedIn == false) { sendUser(user); //loggedIn = true; } sendUser(user);
-				 */
-
-				byte[] data = (byte[]) input.readObject();
-
-				this.user = (User) SerializationUtils.deserialize(data);
-
+				this.user = new User();
+				this.user.setUsername("test");
 				sendUser(user);
+				loggedIn = true;
 
-			} catch (ClassNotFoundException classNotFoundException) {
-				// Display on the Client's GUI
-				System.out.println("\n I have no idea what the user sent!");
+			} else {
+
+				try {
+					/*
+					 * The try method will send the user name and password to the server to get it
+					 * verified. This method also will get(getBody()) the message from the Email
+					 * object from the client and type cast it to String then display it through the
+					 * Client's GUI.
+					 */
+					// ************************************************************
+					/*
+					 * recieveUser();
+					 * 
+					 * if(loggedIn == false) { sendUser(user); loggedIn=true; }else
+					 * if(loggedIn==true){ sendUser(user); }
+					 */
+					// *************************************************************************
+					if (loggedIn == false) {
+						this.user = new User();
+						this.user.setUsername("test");
+						sendUser(user);
+						loggedIn = true;
+					} else {
+
+						byte[] data = (byte[]) input.readObject();
+
+						this.user = (User) SerializationUtils.deserialize(data);
+
+						sendUser(user);
+					}
+
+				} catch (ClassNotFoundException classNotFoundException) {
+					// Display on the Client's GUI
+					System.out.println("\n I have no idea what the user sent!");
+				}
+
 			}
-
 		} while (!message.equals("SERVER - END"));
+
 	}
 
 	// Close connection
@@ -182,14 +199,14 @@ public class Client {
 
 	public void recieveUser() throws ClassNotFoundException, IOException {
 		byte[] data = (byte[]) input.readObject();
-		this.user = (User) SerializationUtils.deserialize(data);
-
+		User populate = (User) SerializationUtils.deserialize(data);
+		this.user.setUser(populate);
 	}
 
-	private void setUser(String username) {
-		this.user.setUsername(username);
-		this.email.setSender(username);
-	}
+	/*
+	 * private void setUser(String username) { this.user.setUsername(username);
+	 * this.email.setSender(username); }
+	 */
 
 	private byte[] serializeEmail(Email serEmail) {
 		byte[] data = SerializationUtils.serialize(serEmail);
