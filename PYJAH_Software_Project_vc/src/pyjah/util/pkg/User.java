@@ -18,16 +18,21 @@ public class User implements Serializable {
 	
 	private static final long serialVersionUID = -169741550773849168L;
 
-	private static String username;
-	private static String password;
-	private static HashMap inbox;
-	private static HashMap sentBox;
-	private ArrayList<Email> inboxAL;
-	private ArrayList<Email> sentboxAL;
+	private String username;
+	private String password;
+	private HashMap inbox;
+	private HashMap sentBox;
+	private ArrayList<Email> inboxAL = new ArrayList<Email>();
+	private ArrayList<Email> sentboxAL = new ArrayList<Email>();
 	private Email email;
+	private User user;
+	private boolean objectPopulated = false;
 	
 	public User() {
-		
+		/*this.username = "";
+		this.password = "";
+		this.inboxAL = new ArrayList<Email>();
+		this.sentboxAL = new ArrayList<Email>();*/
 	}
 
 	public User(String username, String password, HashMap inbox, HashMap sentBox) {
@@ -50,6 +55,10 @@ public class User implements Serializable {
 		this.username = username;
 		this.inbox = new HashMap(inbox);
 		this.sentBox = new HashMap(sentBox);
+	}
+	
+	public void setUser(User user) {
+		this.user = user;
 	}
 	
 	public String getUsername() {
@@ -127,6 +136,14 @@ public class User implements Serializable {
 	
 	public void addToInbox(Email email) {
 		this.inboxAL.add(email);
+	}
+
+	public boolean isObjectPopulated() {
+		return objectPopulated;
+	}
+
+	public void setObjectPopulated(boolean objectPopulated) {
+		this.objectPopulated = objectPopulated;
 	}
 
 
