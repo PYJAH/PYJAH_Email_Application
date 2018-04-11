@@ -113,14 +113,14 @@ public class ClientController implements Initializable {
 		System.out.println("This is the user");
 		// Thread.sleep(500);
 
-		System.out.println(thread1.getState());
+		/*System.out.println(thread1.getState());
 		if (thread1.isAlive()==false) {
 			thread1.start();
 		}
-		System.out.println(thread1.getState());
+		System.out.println(thread1.getState());*/
 
-		// updateInbox();
-		// updateSentbox();
+		updateInbox();
+		updateSentbox();
 
 		loginTab.setDisable(true);
 
