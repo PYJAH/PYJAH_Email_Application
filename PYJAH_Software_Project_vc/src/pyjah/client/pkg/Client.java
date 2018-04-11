@@ -133,14 +133,14 @@ public class Client {
 
 					
 				
-					System.out.println("Client recieved user" + user.toString());
-					System.out.println(loggedIn + " = logged in status");
+					//System.out.println("Client recieved user" + user.toString());
+					//System.out.println(loggedIn + " = logged in status");
 					
-					if(loggedIn == false) {
+				/*	if(loggedIn == false) {
 						loggedIn = true;
-					}
+					}*/
 					
-					System.out.println(loggedIn + " = logged in status");
+					//System.out.println(loggedIn + " = logged in status");
 					
 
 				} catch (ClassNotFoundException classNotFoundException) {

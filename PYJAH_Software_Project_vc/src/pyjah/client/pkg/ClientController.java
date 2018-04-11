@@ -60,10 +60,9 @@ public class ClientController implements Initializable {
 
 	@FXML
 	private Button inboxRefreshButton;
-	
-	@FXML
-    private Button sentRefreshButton;
 
+	@FXML
+	private Button sentRefreshButton;
 
 	private ArrayList<Email> inboxAL = new ArrayList<Email>();
 	private ArrayList<Email> sentBoxAL = new ArrayList<Email>();
@@ -85,7 +84,7 @@ public class ClientController implements Initializable {
 		email.setTime(); // email.getTime(),
 
 		pyjahClient.addToSentBox(email);
-		//pyjahClient.sendUser(pyjahClient.getCurrentUser());
+		// pyjahClient.sendUser(pyjahClient.getCurrentUser());
 		pyjahClient.sendEmail(email);
 		toLine.clear();
 		subjectLine.clear();
@@ -93,8 +92,6 @@ public class ClientController implements Initializable {
 
 		updateInbox();
 		updateSentbox();
-
-		
 
 	}
 
@@ -110,10 +107,15 @@ public class ClientController implements Initializable {
 
 		System.out.println("This is the user");
 		// Thread.sleep(500);
-		
-		thread1.start();
-		//updateInbox();
-		//updateSentbox();
+
+		System.out.println(thread1.getState());
+		if (thread1.isAlive()==false) {
+			thread1.start();
+		}
+		System.out.println(thread1.getState());
+
+		// updateInbox();
+		// updateSentbox();
 
 		loginTab.setDisable(true);
 
@@ -121,10 +123,10 @@ public class ClientController implements Initializable {
 
 	@FXML
 	void radioSetToUserA(ActionEvent event) {
-		// System.out.println("raido");
+
 		userARadioButton.setToggleGroup(group);
 		userARadioButton.setSelected(true);
-		// this.user = testUserA();
+
 		this.user = new User();
 		user.setUsername("User A");
 		pyjahClient.setUser(this.user);
@@ -136,61 +138,23 @@ public class ClientController implements Initializable {
 		System.out.println("radio b");
 		userBRadioButton.setToggleGroup(group);
 		userBRadioButton.setSelected(true);
-		// this.user=testUserA();
+
 		this.user = new User();
 		user.setUsername("User B");
 		pyjahClient.setUser(this.user);
 		this.userIdLabel.setText(this.user.getUsername());
 	}
 
+	// AKA log off button :P
 	@FXML
 	void backToLoginButtonClick(ActionEvent event) {
+		pyjahClient.setLoggedIn(false);
 		loginTab.setDisable(false);
 		tPane.getSelectionModel().select(loginTab);
 		composeTab.setDisable(true);
 		inboxTab.setDisable(true);
 		sentTab.setDisable(true);
 	}
-
-	public void getUser() {
-		this.user = new User();
-		user.setUsername("Dude");
-		this.userIdLabel.setText(this.user.getUsername());
-
-	}
-
-	// Just a test user object to work on populating the list view
-	/*public User testUserA() {
-		User testUserA = new User();
-		Email test = new Email();
-		test.setSender("Howie");
-		test.setRecipient("John");
-		test.setSubject("Test email 1");
-		test.setTime();
-		test.setBody("Hello, this is a test email body message");
-		test.setStatus("unread");
-
-		Email test2 = new Email();
-		test2.setSender("Howie");
-		test2.setRecipient("John");
-		test2.setSubject("Test email 1");
-		test2.setTime();
-		test2.setBody("Hello, this is a test email body message");
-		test2.setStatus("unread");
-
-		testUserA.setSentboxAL(sentBoxAL);
-		testUserA.setInboxAL(inboxAL);
-		testUserA.setUsername("User A test");
-		testUserA.setPassword("123");
-
-		testUserA.addToInbox(test);
-		testUserA.addToInbox(test2);
-
-		return testUserA;
-
-	}*/
-
-	
 
 	public void updateInbox() {
 		ArrayList<String> testList = new ArrayList<String>();
@@ -221,25 +185,28 @@ public class ClientController implements Initializable {
 		System.out.println("Refresh");
 		updateSentbox();
 	}
-	
-	Thread thread1 = new Thread () {
-		public void run () {
-			while(pyjahClient.isLoggedIn() == true) {
-			try {
-				Thread.sleep(3000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+
+	// This is the thread to update the inbox and sent box during startup
+	Thread thread1 = new Thread() {
+		public void run() {
+			while (true) {     // pyjahClient.isLoggedIn() == 
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				updateSentbox();
+				updateInbox();
 			}
-			updateSentbox();
-			updateInbox();
-			}
+
 		}
+
 	};
-	
+
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1r) {
-			//thread1.start();
+		// thread1.start();
 	}
 
 }
