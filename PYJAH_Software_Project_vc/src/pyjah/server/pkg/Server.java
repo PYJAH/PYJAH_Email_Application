@@ -135,9 +135,14 @@ public class Server {
 					Email email1 = (Email) obj;
 
 					if (email1.getRecipient().equals("User B")) {
+	//----->Yang		//addEmailToUserInbox(email1, "User B");
+	//----->Yang		//addEmailToUserSentbox(email1, "User A");
+						
 						userB.addToInbox(email1);
 						System.out.println("User B INbox - " + userB.getInboxAL().get(userB.getInboxAL().size() - 1));
 					} else if (email1.getRecipient().equals("User A")) {
+	//----->Yang		//addEmailToUserInbox(email1, "User A");
+	//----->Yang		//addEmailToUserSentbox(email1, "User B");
 						user.addToInbox(email1);
 						System.out.println("User A INbox - " + user.getInboxAL().get(user.getInboxAL().size() - 1));
 					} else {
@@ -418,7 +423,23 @@ public class Server {
 		this.loggedIn = loggedIn;
 	}
 
-	public void addEmailToUser(Email emailToWrite) {
+	public void addEmailToUserInbox(Email emailToWrite, String username) {
+		User userFromFile = new User();
+		byte[] data = null; // ****TODO: scan the user file for the byte[] for the user and set it equal to
+							// "data" variable
+		// Yangs Code Here |
+		// V
+
+		userFromFile = (User) SerializationUtils.deserialize(data);
+		userFromFile.addToInbox(emailToWrite);
+
+		data = serializeUser(userFromFile);
+
+		// now write this data var to the file again to save the objects state with new
+		// emailS
+	}
+	
+	public void addEmailToUserSentbox(Email emailToWrite, String username) {
 		User userFromFile = new User();
 		byte[] data = null; // ****TODO: scan the user file for the byte[] for the user and set it equal to
 							// "data" variable
