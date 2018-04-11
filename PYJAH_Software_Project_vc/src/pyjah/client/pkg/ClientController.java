@@ -52,42 +52,47 @@ public class ClientController implements Initializable {
 
 	@FXML
 	private ListView<String> inboxListView;
-	
+
 	@FXML
 	private ListView<String> sentboxListView;
 
 	ToggleGroup group = new ToggleGroup();
+
+	@FXML
+	private Button inboxRefreshButton;
+	
+	@FXML
+    private Button sentRefreshButton;
+
 
 	private ArrayList<Email> inboxAL = new ArrayList<Email>();
 	private ArrayList<Email> sentBoxAL = new ArrayList<Email>();
 
 	// private User currentUser;
 	private HashMap messageFields = new HashMap();
-	private User user=null;
-	//private Email email;
-	
-	
+	private User user;
+	// private Email email;
+
 	Client pyjahClient = new Client();
 
 	// Method to send the input from the GUI fields to a location on button click.
 	// As of now it just prints the text fields inputted.
 
-	
-	//Composes a new email object with appropriate fields.
+	// Composes a new email object with appropriate fields.
 	@FXML
 	public void handleSendButtonClick(ActionEvent event) {
 		Email email = new Email(user.getUsername(), toLine.getText(), subjectLine.getText(), messageBody.getText());// ,
-		email.setTime();																											// email.getTime(),
-																													// "Unread");
-		this.user.addToSentBox(email);
-		pyjahClient.sendUser(user);
+		email.setTime(); // email.getTime(),
 
-		updateSentbox();
+		pyjahClient.addToSentBox(email);
+		pyjahClient.sendUser(pyjahClient.getCurrentUser());
+
 		toLine.clear();
 		subjectLine.clear();
 		messageBody.clear();
-		
-		
+
+		updateInbox();
+		updateSentbox();
 
 		/*
 		 * messageFields.put("Recipient", toLine.getText());
@@ -110,32 +115,32 @@ public class ClientController implements Initializable {
 
 	@FXML
 	void loginOnButtonClick(ActionEvent event) {
-		pyjahClient.sendUser(user);
+		pyjahClient.sendUser(pyjahClient.getCurrentUser());
 		pyjahClient.setLoggedIn(true);
 		composeTab.setDisable(false);
 		inboxTab.setDisable(false);
 		sentTab.setDisable(false);
-		
 		tPane.getSelectionModel().select(composeTab);
-		loginTab.setDisable(true);
-		
-		
+		this.user = pyjahClient.getCurrentUser();
+
+		System.out.println("This is the user");
+		// Thread.sleep(500);
 		updateInbox();
 		updateSentbox();
-		
-		
 
+		loginTab.setDisable(true);
 
 	}
 
 	@FXML
 	void radioSetToUserA(ActionEvent event) {
-		//System.out.println("raido");
+		// System.out.println("raido");
 		userARadioButton.setToggleGroup(group);
 		userARadioButton.setSelected(true);
-		//this.user = testUserA();
+		// this.user = testUserA();
 		this.user = new User();
 		user.setUsername("User A");
+		pyjahClient.setUser(this.user);
 		this.userIdLabel.setText(this.user.getUsername());
 	}
 
@@ -144,9 +149,9 @@ public class ClientController implements Initializable {
 		System.out.println("radio b");
 		userBRadioButton.setToggleGroup(group);
 		userBRadioButton.setSelected(true);
-		//this.user=testUserA();
+		// this.user=testUserA();
 		this.user = new User();
-	    user.setUsername("User B");
+		user.setUsername("User B");
 		this.userIdLabel.setText(this.user.getUsername());
 	}
 
@@ -166,8 +171,7 @@ public class ClientController implements Initializable {
 
 	}
 
-	
-	//Just a test user object to work on populating the list view
+	// Just a test user object to work on populating the list view
 	public User testUserA() {
 		User testUserA = new User();
 		Email test = new Email();
@@ -177,7 +181,7 @@ public class ClientController implements Initializable {
 		test.setTime();
 		test.setBody("Hello, this is a test email body message");
 		test.setStatus("unread");
-		
+
 		Email test2 = new Email();
 		test2.setSender("Howie");
 		test2.setRecipient("John");
@@ -185,17 +189,14 @@ public class ClientController implements Initializable {
 		test2.setTime();
 		test2.setBody("Hello, this is a test email body message");
 		test2.setStatus("unread");
-		
-		
-		
+
 		testUserA.setSentboxAL(sentBoxAL);
 		testUserA.setInboxAL(inboxAL);
 		testUserA.setUsername("User A test");
 		testUserA.setPassword("123");
-		
+
 		testUserA.addToInbox(test);
 		testUserA.addToInbox(test2);
-		
 
 		return testUserA;
 
@@ -203,26 +204,35 @@ public class ClientController implements Initializable {
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1r) {
-		
-		
+
 	}
-	
+
 	public void updateInbox() {
 		ArrayList<String> testList = new ArrayList<String>();
-		for (int i =0; i<user.getInboxAL().size(); i++) {
-			testList.add(user.getInboxAL().get(i).getSubject());
+		for (int i = 0; i < pyjahClient.user.getInboxAL().size(); i++) {
+			testList.add(pyjahClient.user.getInboxAL().get(i).getSubject());
 		}
 
-        inboxListView.setItems(FXCollections.observableList(testList));
+		inboxListView.setItems(FXCollections.observableList(testList));
 	}
-	
+
 	public void updateSentbox() {
 		ArrayList<String> testList = new ArrayList<String>();
-		for (int i =0; i<user.getSentboxAL().size(); i++) {
-			testList.add(user.getSentboxAL().get(i).getSubject());
+		for (int i = 0; i < pyjahClient.user.getSentboxAL().size(); i++) {
+			testList.add(pyjahClient.user.getSentboxAL().get(i).getSubject());
 		}
 
-        sentboxListView.setItems(FXCollections.observableList(testList));
+		sentboxListView.setItems(FXCollections.observableList(testList));
+	}
+
+	@FXML
+	void onInboxRefreshButtonClick(ActionEvent event) {
+		updateInbox();
+	}
+
+	@FXML
+	void onSentRefreshButtonClick(ActionEvent event) {
+		updateSentbox();
 	}
 
 }

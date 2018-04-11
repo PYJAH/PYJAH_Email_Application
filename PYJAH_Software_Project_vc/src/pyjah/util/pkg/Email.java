@@ -160,9 +160,9 @@ public class Email implements Serializable {
 		this.status = status;
 	}
 	
-	/*public String toString() {
+	public String toString() {
 		return "The recipient is: "+getRecipient()+"\n"+"The subject is: "+getSubject() + "\n" + "Body: " + getBody();
-	}*/
+	}
 	
 
 }

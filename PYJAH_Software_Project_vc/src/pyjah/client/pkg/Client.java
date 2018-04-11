@@ -37,7 +37,7 @@ public class Client {
 	private Calendar date;
 	private Email email; // = new Email("Howie", "Dude", "Test email", date, "Test Body boyyyyiiii",
 							// "Unread");
-	private User user=null;
+	public User user;
 	private boolean loggedIn = false;
 
 	/*
@@ -132,9 +132,17 @@ public class Client {
 					
 					
 					byte[] data = (byte[]) input.readObject();
-
+					
 					this.user = (User) SerializationUtils.deserialize(data);
 					
+					for (int i = 0; i < data.length - 1; i++) {
+						System.out.print(data[i]);
+					}
+					System.out.println("\nThis is the user serialization number");
+
+					
+					
+					System.out.println("Client recieved user" + user.toString());
 					//sendUser(user);
 
 				} catch (ClassNotFoundException classNotFoundException) {
@@ -143,7 +151,7 @@ public class Client {
 
 				}
 
-			} while (true);
+			} while (!message.equals("Close"));
 		
 
 	}
@@ -216,6 +224,22 @@ public class Client {
 
 	public void setLoggedIn(boolean loggedIn) {
 		this.loggedIn = loggedIn;
+	}
+	
+	public User getCurrentUser() {
+		return this.user;
+	}
+	
+	public void addToInbox(Email email) {
+		this.user.addToInbox(email);
+	}
+	
+	public void addToSentBox(Email email) {
+		this.user.addToSentBox(email);
+	}
+	
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 }

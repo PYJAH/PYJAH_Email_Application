@@ -33,6 +33,8 @@ public class Server {
 	private User user;
 	private boolean loggedIn = false;
 
+	private boolean flag = false;
+
 	private ArrayList<Email> inboxAL = new ArrayList<Email>();
 	private ArrayList<Email> sentBoxAL = new ArrayList<Email>();
 
@@ -107,9 +109,7 @@ public class Server {
 		message = "Server is now connected!";
 		// Display on the Server GUI
 		System.out.println(message);
-		
-		
-		//sendUser(user);
+
 		
 		do {
 
@@ -131,48 +131,49 @@ public class Server {
 
 				// ********************************************************************************************************
 
+				/*
+				 * if(loggedIn == false) {
+				 * 
+				 * }
+				 */
 				
-				
-			/*if(loggedIn == false) {
-				
-			}*/
-				
-					
-			
-					byte[] data = (byte[]) input.readObject();
-					this.user = (User) SerializationUtils.deserialize(data);
-					//fSystem.out.println(""+user.equals(this.user));
-			
-				
+				if (loggedIn == true && flag == false) {
+					sendUser(user);
+					System.out.println("Sent by server");
+					flag = true;
+				}
 
-					for (int i = 0; i < data.length - 1; i++) {
-						System.out.print(data[i]);
-					}
-					System.out.println("\n");
-					
-					/*if(loggedIn == false) {
-						if(!this.user.equals(null)) {
-						 sendUser(user);
-						 loggedIn = true;
-						}
-					}*/
-					
-					System.out.println(user.getInboxAL().toString() + "*********");
-					
-					if(loggedIn == false) {
-						populateUser(user);
-						sendUser(user);
-						loggedIn=true;
-					}
-					
-					System.out.println(user.getInboxAL().toString() + "*********" + loggedIn);
-					
-					// System.out.println(data.toString());
-					
-					//showEmail(this.user.getSentboxAL().get(this.user.getSentboxAL().size() - 1));
-					
+				byte[] data = (byte[]) input.readObject();
+				this.user = (User) SerializationUtils.deserialize(data);
+				// fSystem.out.println(""+user.equals(this.user));
+
+				for (int i = 0; i < data.length - 1; i++) {
+					System.out.print(data[i]);
+				}
+				System.out.println("\n");
 				
 				
+			
+				/*
+				 * if(loggedIn == false) { if(!this.user.equals(null)) { sendUser(user);
+				 * loggedIn = true; } }
+				 */
+
+				// System.out.println(user.getInboxAL().toString() + "*********" + loggedIn);
+
+				if (loggedIn == false) {
+					populateUser(user);
+					// sendUser(user);
+					loggedIn = true;
+				}
+
+				System.out.println(user.getUsername() + "*********" + loggedIn);
+
+				System.out.println("flag = " + flag);
+
+				// System.out.println(data.toString());
+
+				// showEmail(this.user.getSentboxAL().get(this.user.getSentboxAL().size() - 1));
 
 				// **************************************************************************************************************
 
@@ -188,11 +189,10 @@ public class Server {
 				System.out.println("\n I have no idea what the user sent!");
 			}
 
-		} while (true);
-		
+	  	} while (true);
 
 	}
-	
+
 	public void populateUser(User user) {
 		this.user = testUserA();
 		loggedIn = true;
