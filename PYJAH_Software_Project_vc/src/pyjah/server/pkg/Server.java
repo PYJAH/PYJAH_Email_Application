@@ -1,4 +1,4 @@
-/*				Modified and implemented by Ammanuel.
+/*				Modified and implemented by Ammanuel, Howie and Yang.
  *This is the server class. It needs more updating from the file processing program, email class, and user class.
  */
 

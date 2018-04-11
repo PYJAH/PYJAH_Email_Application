@@ -1,3 +1,6 @@
+/*				Modified and implemented by Howie and Paul.
+ *This is the server class. It needs more updating from the file processing program, email class, and user class.
+ */
 package pyjah.util.pkg;
 
 import java.io.IOException;
