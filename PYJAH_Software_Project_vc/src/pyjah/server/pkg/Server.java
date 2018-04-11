@@ -30,13 +30,20 @@ public class Server {
 	private String message;
 	private TextArea console;
 	// private Email email;
-	private User user;
-	private boolean loggedIn = false;
+	private static User user;
+	private static User userA;
+	private static User userB;
+	public static boolean loggedIn = false;
+
+	public static String loggedInUser;
 
 	private boolean flag = false;
 
-	private ArrayList<Email> inboxAL = new ArrayList<Email>();
-	private ArrayList<Email> sentBoxAL = new ArrayList<Email>();
+	//private ArrayList<Email> inboxAL = new ArrayList<Email>();
+	//private ArrayList<Email> sentBoxAL = new ArrayList<Email>();
+
+	//private ArrayList<Email> inboxALUserB = new ArrayList<Email>();
+	//private ArrayList<Email> sentBoxALUserB = new ArrayList<Email>();
 
 	public Server() {
 		// this.email = null;
@@ -110,7 +117,6 @@ public class Server {
 		// Display on the Server GUI
 		System.out.println(message);
 
-		
 		do {
 
 			try {
@@ -120,83 +126,65 @@ public class Server {
 				 * through the Server's GUI.
 				 */
 
-				//
-
-				/*
-				 * if(loggedIn == false) { recieveUser(); retrieveUser(); loggedIn = true; }else
-				 * { recieveUser();
-				 * 
-				 * }
-				 */
-
-				// ********************************************************************************************************
-
-				/*
-				 * if(loggedIn == false) {
-				 * 
-				 * }
-				 */
-				
-				if (loggedIn == true && flag == false) {
-					sendUser(user);
-					System.out.println("Sent by server");
-					flag = true;
-				}
-
 				byte[] data = (byte[]) input.readObject();
-				this.user = (User) SerializationUtils.deserialize(data);
-				// fSystem.out.println(""+user.equals(this.user));
+				Object obj = (Object) SerializationUtils.deserialize(data);
 
-				for (int i = 0; i < data.length - 1; i++) {
-					System.out.print(data[i]);
+				if (obj.getClass() == Email.class) {
+					Email email1 = (Email) obj;
+
+					if (email1.getRecipient().equals("User B")) {
+						userB.addToInbox(email1);
+						System.out.println("User B INbox - " + userB.getInboxAL().get(userB.getInboxAL().size() - 1));
+					} else if (email1.getRecipient().equals("User A")) {
+						user.addToInbox(email1);
+						System.out.println("User A INbox - " + user.getInboxAL().get(user.getInboxAL().size() - 1));
+					} else {
+						System.out.println("Invalid Recipient Adress");
+					}
+					System.out.println("\n" + email1);
+					System.out.println("The status of the email is: " + email1.getStatus());
+					showEmail(email1);
+
 				}
-				System.out.println("\n");
-				
-				
-			
-				/*
-				 * if(loggedIn == false) { if(!this.user.equals(null)) { sendUser(user);
-				 * loggedIn = true; } }
-				 */
 
-				// System.out.println(user.getInboxAL().toString() + "*********" + loggedIn);
-
-				if (loggedIn == false) {
-					populateUser(user);
-					// sendUser(user);
+				else if (obj.getClass() == User.class) {
+					this.user = (User) obj;
+					loggedInUser = user.getUsername();
+					System.out.println("User recieved");
 					loggedIn = true;
+
+					//userB = testUserB();
 				}
+
+				System.out.println("Server - " + loggedIn);
+
+				
 
 				System.out.println(user.getUsername() + "*********" + loggedIn);
 
 				System.out.println("flag = " + flag);
-
-				// System.out.println(data.toString());
-
-				// showEmail(this.user.getSentboxAL().get(this.user.getSentboxAL().size() - 1));
-
-				// **************************************************************************************************************
-
-				/*
-				 * if(loggedIn == false) { retrieveUser(); loggedIn = true; }else if(loggedIn ==
-				 * true) { recieveUser(); sendUser(user); }
-				 */
-
-				// showEmail(this.user.getSentboxAL().get(this.user.getSentboxAL().size()-1));
 
 			} catch (ClassNotFoundException e) {
 				// Display on the Server GUI
 				System.out.println("\n I have no idea what the user sent!");
 			}
 
-	  	} while (true);
+		} while (true);
 
 	}
 
+	
+	//Method used to retrieve user byte data from text file and set equal to current user
 	public void populateUser(User user) {
-		this.user = testUserA();
+		if (loggedInUser.equals("User A")) {
+			this.user = testUserA();
+		} else if (loggedInUser.equals("User B")) {
+			this.user = testUserB();
+		}
+
 		loggedIn = true;
-		sendUser(user);
+
+		// sendUser(user);
 	}
 
 	// This method will close the streams and sockets when we close the program or
@@ -329,6 +317,10 @@ public class Server {
 		}
 	}
 
+	public void sendUserLogin(User user) {
+		sendUser(user);
+	}
+
 	// to accept user objects being sent from the client
 	public void recieveUser() throws ClassNotFoundException, IOException {
 		byte[] data = (byte[]) input.readObject();
@@ -341,8 +333,17 @@ public class Server {
 
 	}
 
+	public void addToUserA(User user) {
+
+		userA.addToInbox((Email) user.getSentBox().get(user.getSentBox().size() - 1));
+
+	}
+
 	public User testUserA() {
-		User testUserA = new User();
+		ArrayList<Email> inboxAL = new ArrayList<Email>();
+		ArrayList<Email> sentBoxAL = new ArrayList<Email>();
+
+		userA = new User();
 		Email test = new Email();
 		test.setSender("Howie");
 		test.setRecipient("John");
@@ -359,15 +360,60 @@ public class Server {
 		test2.setBody("Hello, this is a test email body message");
 		test2.setStatus("unread");
 
-		testUserA.setSentboxAL(sentBoxAL);
-		testUserA.setInboxAL(inboxAL);
-		testUserA.setUsername("User A test");
-		testUserA.setPassword("123");
+		userA.setSentboxAL(sentBoxAL);
+		userA.setInboxAL(inboxAL);
+		userA.setUsername("User A test");
+		userA.setPassword("123");
 
-		testUserA.addToInbox(test);
-		testUserA.addToInbox(test2);
+		userA.addToInbox(test);
+		userA.addToInbox(test2);
 
-		return testUserA;
+		return userA;
 
+	}
+
+	public User testUserB() {
+		ArrayList<Email> inboxAL = new ArrayList<Email>();
+		ArrayList<Email> sentBoxAL = new ArrayList<Email>();
+		userB = new User();
+		Email test = new Email();
+		test.setSender("User A");
+		test.setRecipient("User B");
+		test.setSubject("BBBBBBB");
+		test.setTime();
+		test.setBody("BBBBBBBBBBBBBB");
+		test.setStatus("unread");
+
+		Email test2 = new Email();
+		test2.setSender("User A");
+		test2.setRecipient("User B");
+		test2.setSubject("BBBB2");
+		test2.setTime();
+		test2.setBody("Hello, this is a test email body message");
+		test2.setStatus("unread");
+
+		userB.setSentboxAL(sentBoxAL);
+		userB.setInboxAL(inboxAL);
+		userB.setUsername("User B test");
+		userB.setPassword("123");
+
+		userB.addToInbox(test);
+		userB.addToInbox(test2);
+
+		return userB;
+
+	}
+
+	public User getUser() {
+		return this.user;
+
+	}
+
+	public boolean getLoggedStatus() {
+		return loggedIn;
+	}
+
+	public void setLoggedStatus(boolean loggedIn) {
+		this.loggedIn = loggedIn;
 	}
 }

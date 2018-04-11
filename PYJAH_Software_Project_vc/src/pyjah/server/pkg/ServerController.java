@@ -39,6 +39,9 @@ public class ServerController implements Initializable {
 
 		
 		 public void handleServerButtonClick() {
+			 pyjahServer.populateUser(pyjahServer.getUser());
+			 pyjahServer.sendUser(pyjahServer.getUser());
+			
 			 Platform.runLater(new Runnable(){
 					@Override
 					public void run() {
@@ -54,12 +57,38 @@ public class ServerController implements Initializable {
 					pyjahServer.startServer();
 				}
 			};
+			
+			Thread thread2 = new Thread () {
+				public void run () {
+					//boolean flag = false;
+					System.out.println("server Thread 2");
+					
+					
+					while(true) {
+						try {
+							Thread.sleep(1000);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						
+						if(pyjahServer.getLoggedStatus() == true) {
+							pyjahServer.populateUser(pyjahServer.getUser());
+							 pyjahServer.sendUser(pyjahServer.getUser());
+							 break;
+						}
+						
+					}
+					interrupt();
+				}
+			};
 		 
 
 		@Override
 		public void initialize(URL arg0, ResourceBundle arg1) {
 			pyjahServer.setConsole(console);
 			thread1.start();
+			thread2.start();
 			
 			
 		}

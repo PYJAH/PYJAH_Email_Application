@@ -85,8 +85,8 @@ public class ClientController implements Initializable {
 		email.setTime(); // email.getTime(),
 
 		pyjahClient.addToSentBox(email);
-		pyjahClient.sendUser(pyjahClient.getCurrentUser());
-
+		//pyjahClient.sendUser(pyjahClient.getCurrentUser());
+		pyjahClient.sendEmail(email);
 		toLine.clear();
 		subjectLine.clear();
 		messageBody.clear();
@@ -94,22 +94,7 @@ public class ClientController implements Initializable {
 		updateInbox();
 		updateSentbox();
 
-		/*
-		 * messageFields.put("Recipient", toLine.getText());
-		 * messageFields.put("Subject", subjectLine.getText());
-		 * messageFields.put("Message", messageBody.getText());
-		 * System.out.println("Recipient:\n" + messageFields.get("Recipient") +"\n\n" +
-		 * "Subject:\n" + messageFields.get("Subject") + "\n\n" + "Message Body:\n" +
-		 * messageFields.get("Message"));
-		 * 
-		 */
-
-		/*
-		 * String sender; String recipient=toLine.getText(); String
-		 * body=messageBody.getText(); String subject=subjectLine.getText();
-		 * pyjahClient.sendMessage(recipient); pyjahClient.sendMessage(body);
-		 * pyjahClient.sendMessage(subject);
-		 */
+		
 
 	}
 
@@ -125,8 +110,10 @@ public class ClientController implements Initializable {
 
 		System.out.println("This is the user");
 		// Thread.sleep(500);
-		updateInbox();
-		updateSentbox();
+		
+		thread1.start();
+		//updateInbox();
+		//updateSentbox();
 
 		loginTab.setDisable(true);
 
@@ -152,6 +139,7 @@ public class ClientController implements Initializable {
 		// this.user=testUserA();
 		this.user = new User();
 		user.setUsername("User B");
+		pyjahClient.setUser(this.user);
 		this.userIdLabel.setText(this.user.getUsername());
 	}
 
@@ -172,7 +160,7 @@ public class ClientController implements Initializable {
 	}
 
 	// Just a test user object to work on populating the list view
-	public User testUserA() {
+	/*public User testUserA() {
 		User testUserA = new User();
 		Email test = new Email();
 		test.setSender("Howie");
@@ -200,12 +188,9 @@ public class ClientController implements Initializable {
 
 		return testUserA;
 
-	}
+	}*/
 
-	@Override
-	public void initialize(URL arg0, ResourceBundle arg1r) {
-
-	}
+	
 
 	public void updateInbox() {
 		ArrayList<String> testList = new ArrayList<String>();
@@ -227,12 +212,34 @@ public class ClientController implements Initializable {
 
 	@FXML
 	void onInboxRefreshButtonClick(ActionEvent event) {
+		System.out.println(pyjahClient.getCurrentUser().getUsername());
 		updateInbox();
 	}
 
 	@FXML
 	void onSentRefreshButtonClick(ActionEvent event) {
+		System.out.println("Refresh");
 		updateSentbox();
+	}
+	
+	Thread thread1 = new Thread () {
+		public void run () {
+			while(pyjahClient.isLoggedIn() == true) {
+			try {
+				Thread.sleep(3000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			updateSentbox();
+			updateInbox();
+			}
+		}
+	};
+	
+	@Override
+	public void initialize(URL arg0, ResourceBundle arg1r) {
+			//thread1.start();
 	}
 
 }

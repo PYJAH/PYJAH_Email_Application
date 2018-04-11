@@ -37,8 +37,8 @@ public class Client {
 	private Calendar date;
 	private Email email; // = new Email("Howie", "Dude", "Test email", date, "Test Body boyyyyiiii",
 							// "Unread");
-	public User user;
-	private boolean loggedIn = false;
+	public static User user;
+	private static boolean loggedIn = false;
 
 	/*
 	 * The constructor right now just takes the IP address needed for the client to
@@ -120,15 +120,6 @@ public class Client {
 					 * object from the client and type cast it to String then display it through the
 					 * Client's GUI.
 					 */
-					// ************************************************************
-					/*
-					 * recieveUser();
-					 * 
-					 * if(loggedIn == false) { sendUser(user); loggedIn=true; }else
-					 * if(loggedIn==true){ sendUser(user); }
-					 */
-					// *************************************************************************
-
 					
 					
 					byte[] data = (byte[]) input.readObject();
@@ -141,9 +132,16 @@ public class Client {
 					System.out.println("\nThis is the user serialization number");
 
 					
-					
+				
 					System.out.println("Client recieved user" + user.toString());
-					//sendUser(user);
+					System.out.println(loggedIn + " = logged in status");
+					
+					if(loggedIn == false) {
+						loggedIn = true;
+					}
+					
+					System.out.println(loggedIn + " = logged in status");
+					
 
 				} catch (ClassNotFoundException classNotFoundException) {
 					// Display on the Client's GUI
