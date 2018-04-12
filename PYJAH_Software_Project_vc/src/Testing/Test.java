@@ -41,7 +41,7 @@ public class Test {
 			
 		}
 		
-		try (PrintWriter output = new PrintWriter("test.txt");) {
+		try (PrintWriter output = new PrintWriter("User B.txt");) {
 			output.println(byteString);
 		}catch (FileNotFoundException e) {
 			System.out.println(e);
