@@ -135,8 +135,8 @@ public class Server {
 					Email email1 = (Email) obj;
 
 					if (email1.getRecipient().equals("User B")) {
-	//----->Yang		//addEmailToUserInbox(email1, "User B");
-	//----->Yang		//addEmailToUserSentbox(email1, "User A");
+	//----->Yang		addEmailToUserInbox(email1, "User B");
+	//----->Yang		addEmailToUserSentbox(email1, "User A");
 						
 						userB.addToInbox(email1);
 						System.out.println("User B INbox - " + userB.getInboxAL().get(userB.getInboxAL().size() - 1));
@@ -216,8 +216,8 @@ public class Server {
 
 			// instead of testUserA() do the file processing method that retrieves User A
 			// byte code
-			// byte [] data = Yangs code to retrieve user A byte array
-			// this.user = (User) SerializationUtils.deserialize(data);
+			// byte [] data; // = Yangs code to retrieve user A byte array
+			 //this.user = (User) SerializationUtils.deserialize(data);
 
 			this.user = testUserA();
 		} else if (loggedInUser.equals("User B")) {
@@ -433,7 +433,7 @@ public class Server {
 		byte[] data = null; // ****TODO: scan the user file for the byte[] for the user and set it equal to
 							// "data" variable
 		// Yangs Code Here |
-		// V
+		//                 V
 
 		userFromFile = (User) SerializationUtils.deserialize(data);
 		userFromFile.addToInbox(emailToWrite);
