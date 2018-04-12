@@ -210,6 +210,7 @@ public class Server {
 
 	// Method used to retrieve user byte data from text file and set equal to
 	// current user
+	//This method is called in Thread1 within the SERVER CONTROLLER CLASS
 	public void populateUser(User user) {
 		if (loggedInUser.equals("User A")) {
 
@@ -408,6 +409,10 @@ public class Server {
 
 		return userB;
 
+	}
+	
+	public void setUserB() {
+		this.userB = testUserB();
 	}
 
 	public User getUser() {
