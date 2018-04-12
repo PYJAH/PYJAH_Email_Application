@@ -74,6 +74,7 @@ public class ServerController implements Initializable {
 						
 						if(pyjahServer.getLoggedStatus() == true) {
 							pyjahServer.populateUser(pyjahServer.getUser());
+							pyjahServer.setUserB();
 							 pyjahServer.sendUser(pyjahServer.getUser());
 							 break;
 						}
