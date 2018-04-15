@@ -110,7 +110,7 @@ public class ClientController implements Initializable {
 		tPane.getSelectionModel().select(composeTab);
 		this.user = pyjahClient.getCurrentUser();
 
-		System.out.println("This is the user");
+		System.out.println("This is the user" + pyjahClient.getCurrentUser().getUsername());
 		// Thread.sleep(500);
 
 		/*System.out.println(thread1.getState());
