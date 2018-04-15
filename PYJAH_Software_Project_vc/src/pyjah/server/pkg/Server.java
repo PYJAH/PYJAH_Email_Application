@@ -9,6 +9,7 @@ import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -237,6 +238,8 @@ public class Server {
 	               //for (int i = 0; i < data.length; i++) {
 	                 //          System.out.print((char) data[i]);
 	               // }
+	               
+	               fileInputStream.close();
 	          } catch (FileNotFoundException e) {
 	                      System.out.println("File Not Found.");
 	                      e.printStackTrace();
@@ -246,7 +249,7 @@ public class Server {
 	                    e1.printStackTrace();
 	          }
 
-			
+	         
 			//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	         this.user = (User) SerializationUtils.deserialize(data);
 
@@ -262,11 +265,12 @@ public class Server {
 
 	         byte[] data = new byte[(int) file.length()];
 	         try {
-	               FileInputStream fileInputStream = new FileInputStream(file);
-	               fileInputStream.read(data);
+	               FileInputStream fileInputStream1 = new FileInputStream(file);
+	               fileInputStream1.read(data);
 	               //for (int i = 0; i < data.length; i++) {
 	                 //          System.out.print((char) data[i]);
 	               // }
+	               fileInputStream1.close();
 	          } catch (FileNotFoundException e) {
 	                      System.out.println("File Not Found.");
 	                      e.printStackTrace();
@@ -275,7 +279,7 @@ public class Server {
 	                   System.out.println("Error Reading The File.");
 	                    e1.printStackTrace();
 	          }
-
+	         
 			
 			this.user = (User) SerializationUtils.deserialize(data);
 
@@ -499,6 +503,7 @@ public class Server {
                //for (int i = 0; i < data.length; i++) {
                  //          System.out.print((char) data[i]);
                // }
+               fileInputStream.close();
           } catch (FileNotFoundException e) {
                       System.out.println("File Not Found.");
                       e.printStackTrace();
@@ -518,12 +523,13 @@ public class Server {
 		
 		//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 		
-		try(BufferedReader br = new BufferedReader( new FileReader(file))){
-			file.createNewFile();
-			String line= null;
-			while((line=br.readLine())!=null){
-				System.out.println(line+",");
-			}
+		try (FileOutputStream writetoFile = new FileOutputStream("file")) {
+			PrintWriter writer = new PrintWriter(file);
+			writer.print("");
+			writer.close();
+			writetoFile.write(data);
+		} catch (IOException ioe) {
+		    ioe.printStackTrace();
 		}
 		
 		
@@ -548,6 +554,7 @@ public class Server {
               //for (int i = 0; i < data.length; i++) {
                 //          System.out.print((char) data[i]);
               // }
+              fileInputStream.close();
          } catch (FileNotFoundException e) {
                      System.out.println("File Not Found.");
                      e.printStackTrace();
@@ -571,12 +578,13 @@ public class Server {
 		
 		
 		
-		try(BufferedReader br = new BufferedReader( new FileReader(file))){
-			file.createNewFile();
-			String line= null;
-			while((line=br.readLine())!=null){
-				System.out.println(line+",");
-			}
+		try (FileOutputStream writetoFile = new FileOutputStream("file")) {
+			PrintWriter writer = new PrintWriter(file);
+			writer.print("");
+			writer.close();
+			writetoFile.write(data);
+		} catch (IOException ioe) {
+		    ioe.printStackTrace();
 		}
 		
 		
