@@ -16,6 +16,7 @@ import java.util.*;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.input.MouseEvent;
 import pyjah.util.pkg.Email;
 import pyjah.util.pkg.User;
 //import unused.User;
@@ -52,12 +53,18 @@ public class ClientController implements Initializable {
 
 	@FXML
 	private ListView<String> inboxListView;
-
+	@FXML
+	private String inboxSelected;
+	@FXML
+	private TextArea inboxTextArea;
+	@FXML
+	private TextArea sentTextArea;
 	@FXML
 	private ListView<String> sentboxListView;
 
 	ToggleGroup group = new ToggleGroup();
-
+	@FXML
+	private String sentSelected;
 	@FXML
 	private Button inboxRefreshButton;
 
@@ -190,11 +197,32 @@ public class ClientController implements Initializable {
 		System.out.println("Refresh");
 		updateSentbox();
 	}
+	
+	@FXML
+	void handleInboxSelection(MouseEvent event) {
+		inboxSelected= inboxListView.getSelectionModel().getSelectedItem().toString();
+		
+		inboxTextArea.setText("Subject: "+ inboxSelected +"\n From:" +"\n Body:" );
+		}
+	
+	@FXML
+	void handleSentSelection(MouseEvent event) {
+		sentSelected= inboxListView.getSelectionModel().getSelectedItem().toString();
+		sentTextArea.setText("Subject: "+ inboxSelected +"\n From:" +"\n Body:" );
+		
+	}
+	
+	
+	
+	@FXML
+	
 
 	// This is the thread to update the inbox and sent box during startup
 	Thread thread1 = new Thread() {
 		public void run() {
+			
 			while (true) {     // pyjahClient.isLoggedIn() == 
+			
 				try {
 					Thread.sleep(1000);
 				} catch (InterruptedException e) {
