@@ -358,9 +358,7 @@ public class Server {
 	}
 
 	/*public void addToUserA(User user) {
-
 		userA.addToInbox((Email) user.getSentBox().get(user.getSentBox().size() - 1));
-
 	}*/
 
 	public User getUser() {
