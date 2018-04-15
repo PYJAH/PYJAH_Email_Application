@@ -4,10 +4,16 @@
 
 package pyjah.server.pkg;
 
+import java.io.BufferedReader;
 import java.io.EOFException;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
 import java.io.Serializable;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -40,11 +46,11 @@ public class Server {
 
 	private boolean flag = false;
 
-	// private ArrayList<Email> inboxAL = new ArrayList<Email>();
-	// private ArrayList<Email> sentBoxAL = new ArrayList<Email>();
+	 private ArrayList<Email> inboxAL = new ArrayList<Email>();
+	 private ArrayList<Email> sentBoxAL = new ArrayList<Email>();
 
-	// private ArrayList<Email> inboxALUserB = new ArrayList<Email>();
-	// private ArrayList<Email> sentBoxALUserB = new ArrayList<Email>();
+	 private ArrayList<Email> inboxALUserB = new ArrayList<Email>();
+	 private ArrayList<Email> sentBoxALUserB = new ArrayList<Email>();
 
 	public Server() {
 		// this.email = null;
@@ -135,22 +141,22 @@ public class Server {
 					Email email1 = (Email) obj;
 
 					if (email1.getRecipient().equals("User B")) {
-	//----->Yang		addEmailToUserInbox(email1, "User B");
-	//----->Yang		addEmailToUserSentbox(email1, "User A");
+						addEmailToUserInbox(email1, "User B");//----->Yang	
+						addEmailToUserSentbox(email1, "User A");//----->Yang
 						
 						userB.addToInbox(email1);
 						System.out.println("User B INbox - " + userB.getInboxAL().get(userB.getInboxAL().size() - 1));
 					} else if (email1.getRecipient().equals("User A")) {
-	//----->Yang		//addEmailToUserInbox(email1, "User A");
-	//----->Yang		//addEmailToUserSentbox(email1, "User B");
+						addEmailToUserInbox(email1, "User A");//----->Yang
+						addEmailToUserSentbox(email1, "User B");//----->Yang
 						user.addToInbox(email1);
 						System.out.println("User A INbox - " + user.getInboxAL().get(user.getInboxAL().size() - 1));
 					} else {
 						System.out.println("Invalid Recipient Adress");
 					}
-					// System.out.println("\n" + email1);
-					// System.out.println("The status of the email is: " + email1.getStatus());
-					// showEmail(email1);
+					 System.out.println("\n" + email1);
+					 System.out.println("The status of the email is: " + email1.getStatus());
+					 showEmail(email1);
 
 				}
 
@@ -211,22 +217,69 @@ public class Server {
 	// Method used to retrieve user byte data from text file and set equal to
 	// current user
 	//This method is called in Thread1 within the SERVER CONTROLLER CLASS
-	public void populateUser(User user) {
+	public void populateUser(User user) throws IOException {
 		if (loggedInUser.equals("User A")) {
 
 			// instead of testUserA() do the file processing method that retrieves User A
 			// byte code
 			// byte [] data; // = Yangs code to retrieve user A byte array
-			 //this.user = (User) SerializationUtils.deserialize(data);
+			
+			
+			
+			
+			//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+			 File file = new File("User A.txt");
 
-			this.user = testUserA();
+	         byte[] data = new byte[(int) file.length()];
+	         try {
+	               FileInputStream fileInputStream = new FileInputStream(file);
+	               fileInputStream.read(data);
+	               //for (int i = 0; i < data.length; i++) {
+	                 //          System.out.print((char) data[i]);
+	               // }
+	          } catch (FileNotFoundException e) {
+	                      System.out.println("File Not Found.");
+	                      e.printStackTrace();
+	          }
+	          catch (IOException e1) {
+	                   System.out.println("Error Reading The File.");
+	                    e1.printStackTrace();
+	          }
+
+			
+			//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	         this.user = (User) SerializationUtils.deserialize(data);
+
+			//this.user = testUserA();
 		} else if (loggedInUser.equals("User B")) {
 			// instead of testUserB() do the file processing method that retrieves User A
 			// byte code
 			// byte [] data = Yangs code to retrieve user B byte array
-			// this.user = (User) SerializationUtils.deserialize(data);
+			
+			
+			
+			File file = new File("User B.txt");
 
-			this.user = testUserB();
+	         byte[] data = new byte[(int) file.length()];
+	         try {
+	               FileInputStream fileInputStream = new FileInputStream(file);
+	               fileInputStream.read(data);
+	               //for (int i = 0; i < data.length; i++) {
+	                 //          System.out.print((char) data[i]);
+	               // }
+	          } catch (FileNotFoundException e) {
+	                      System.out.println("File Not Found.");
+	                      e.printStackTrace();
+	          }
+	          catch (IOException e1) {
+	                   System.out.println("Error Reading The File.");
+	                    e1.printStackTrace();
+	          }
+
+			
+			this.user = (User) SerializationUtils.deserialize(data);
+
+			//this.user = testUserB();
 		}
 
 		loggedIn = true;
@@ -309,7 +362,7 @@ public class Server {
 		userA.addToInbox((Email) user.getSentBox().get(user.getSentBox().size() - 1));
 
 	}
-
+/*
 	public User testUserA() {
 		ArrayList<Email> inboxAL = new ArrayList<Email>();
 		ArrayList<Email> sentBoxAL = new ArrayList<Email>();
@@ -410,11 +463,13 @@ public class Server {
 		return userB;
 
 	}
+	*/
 	
+	/*
 	public void setUserB() {
 		this.userB = testUserB();
 	}
-
+*/
 	public User getUser() {
 		return this.user;
 
@@ -428,13 +483,31 @@ public class Server {
 		this.loggedIn = loggedIn;
 	}
 
-	public void addEmailToUserInbox(Email emailToWrite, String username) {
+	public void addEmailToUserInbox(Email emailToWrite, String username) throws FileNotFoundException, IOException {
 		User userFromFile = new User();
-		byte[] data = null; // ****TODO: scan the user file for the byte[] for the user and set it equal to
+		//byte[] data = null; // ****TODO: scan the user file for the byte[] for the user and set it equal to
 							// "data" variable
 		// Yangs Code Here |
 		//                 V
+		//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+		 File file = new File(username+".txt");
 
+         byte[] data = new byte[(int) file.length()];
+         try {
+               FileInputStream fileInputStream = new FileInputStream(file);
+               fileInputStream.read(data);
+               //for (int i = 0; i < data.length; i++) {
+                 //          System.out.print((char) data[i]);
+               // }
+          } catch (FileNotFoundException e) {
+                      System.out.println("File Not Found.");
+                      e.printStackTrace();
+          }
+          catch (IOException e1) {
+                   System.out.println("Error Reading The File.");
+                    e1.printStackTrace();
+          }
+         //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 		userFromFile = (User) SerializationUtils.deserialize(data);
 		userFromFile.addToInbox(emailToWrite);
 
@@ -442,14 +515,48 @@ public class Server {
 
 		// now write this data var to the file again to save the objects state with new
 		// emailS
+		
+		//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+		
+		try(BufferedReader br = new BufferedReader( new FileReader(file))){
+			file.createNewFile();
+			String line= null;
+			while((line=br.readLine())!=null){
+				System.out.println(line+",");
+			}
+		}
+		
+		
+		
+		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	}
 	
-	public void addEmailToUserSentbox(Email emailToWrite, String username) {
+	public void addEmailToUserSentbox(Email emailToWrite, String username) throws FileNotFoundException, IOException {
 		User userFromFile = new User();
-		byte[] data = null; // ****TODO: scan the user file for the byte[] for the user and set it equal to
+		//byte[] data = null; // ****TODO: scan the user file for the byte[] for the user and set it equal to
 							// "data" variable
 		// Yangs Code Here |
 		// V
+		
+		//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+		 File file = new File(username+".txt");
+
+        byte[] data = new byte[(int) file.length()];
+        try {
+              FileInputStream fileInputStream = new FileInputStream(file);
+              fileInputStream.read(data);
+              //for (int i = 0; i < data.length; i++) {
+                //          System.out.print((char) data[i]);
+              // }
+         } catch (FileNotFoundException e) {
+                     System.out.println("File Not Found.");
+                     e.printStackTrace();
+         }
+         catch (IOException e1) {
+                  System.out.println("Error Reading The File.");
+                   e1.printStackTrace();
+         }
+        //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 		userFromFile = (User) SerializationUtils.deserialize(data);
 		userFromFile.addToInbox(emailToWrite);
@@ -458,5 +565,24 @@ public class Server {
 
 		// now write this data var to the file again to save the objects state with new
 		// emailS
+		
+		
+		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+		
+		
+		
+		try(BufferedReader br = new BufferedReader( new FileReader(file))){
+			file.createNewFile();
+			String line= null;
+			while((line=br.readLine())!=null){
+				System.out.println(line+",");
+			}
+		}
+		
+		
+		//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+		
+		
+		
 	}
 }
