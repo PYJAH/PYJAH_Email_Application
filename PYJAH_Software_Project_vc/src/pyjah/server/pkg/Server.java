@@ -523,16 +523,11 @@ public class Server {
 		
 		//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 		
-		try (FileOutputStream writetoFile = new FileOutputStream("file")) {
-			PrintWriter writer = new PrintWriter(file);
-			writer.print("");
-			writer.close();
-			writetoFile.write(data);
-		} catch (IOException ioe) {
-		    ioe.printStackTrace();
-		}
 		
-		
+		//overwrite to file
+        FileOutputStream fos = new FileOutputStream(username+".txt");
+        
+        fos.write(data);
 		
 		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	}
@@ -577,15 +572,15 @@ public class Server {
 		//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 		
 		
+		//overwrite to file
+        FileOutputStream fos = new FileOutputStream(username+".txt");
+        
+        fos.write(data);
+        
 		
-		try (FileOutputStream writetoFile = new FileOutputStream("file")) {
-			PrintWriter writer = new PrintWriter(file);
-			writer.print("");
-			writer.close();
-			writetoFile.write(data);
-		} catch (IOException ioe) {
-		    ioe.printStackTrace();
-		}
+		
+		
+		
 		
 		
 		//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
