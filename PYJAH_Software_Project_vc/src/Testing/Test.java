@@ -21,20 +21,20 @@ public class Test {
 		email.setSender("PYJAH EMAIL");
 		email.setSubject("Welcome");
 		email.setBody("Welcome to the Pyjah Network");
-		email.setRecipient("User B");
+		email.setRecipient("User A");
 		
 		User userB = new User();
-		userB.setUsername("User B");
+		userB.setUsername("User A");
 		userB.addToInbox(email);
 		
 		byte[] myByteArray = serializeUser(userB);
-		/*try (FileOutputStream fos = new FileOutputStream("test.txt")) {
+		try (FileOutputStream fos = new FileOutputStream("User A.txt")) {
 			   fos.write(myByteArray);
 			   System.out.println("Stored byte");
 			   //fos.close(); There is no more need for this line since you had created the instance of "fos" inside the try. And this will automatically close the OutputStream
 			}
 		
-		System.out.println(myByteArray);*/
+		/*System.out.println(myByteArray);
 		String byteString="";
 		for(int i = 0; i < myByteArray.length-1; i++) {
 			byteString += myByteArray[i] + ",";
@@ -45,7 +45,7 @@ public class Test {
 			output.println(byteString);
 		}catch (FileNotFoundException e) {
 			System.out.println(e);
-		}
+		}*/
 		
 		
 		/*

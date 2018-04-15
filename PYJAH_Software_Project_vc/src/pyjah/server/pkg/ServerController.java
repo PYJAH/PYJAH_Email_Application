@@ -38,7 +38,7 @@ public class ServerController implements Initializable {
 	 }
 
 		
-		 public void handleServerButtonClick() {
+		 public void handleServerButtonClick() throws IOException {
 			 pyjahServer.populateUser(pyjahServer.getUser());
 			 pyjahServer.sendUser(pyjahServer.getUser());
 			
@@ -73,10 +73,16 @@ public class ServerController implements Initializable {
 						}
 						
 						if(pyjahServer.getLoggedStatus() == true) {
-							pyjahServer.populateUser(pyjahServer.getUser());
-							pyjahServer.setUserB();
-							 pyjahServer.sendUser(pyjahServer.getUser());
-							 break;
+							try {
+								pyjahServer.populateUser(pyjahServer.getUser());
+								//pyjahServer.setUserB();
+								 pyjahServer.sendUser(pyjahServer.getUser());
+								 break;
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							
 						}
 						
 					}
