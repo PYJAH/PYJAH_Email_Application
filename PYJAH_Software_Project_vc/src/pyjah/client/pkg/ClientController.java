@@ -10,6 +10,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
 import java.util.*;
@@ -55,7 +56,18 @@ public class ClientController implements Initializable {
 
 	@FXML
 	private ListView<String> sentboxListView;
-
+	
+	@FXML
+	private String sentSelected;
+	
+	@FXML
+	private String inboxSelected;
+	@FXML
+	private TextArea inboxTextArea;
+	
+	@FXML
+	private TextArea sentTextArea;
+	
 	ToggleGroup group = new ToggleGroup();
 
 	@FXML
@@ -191,6 +203,30 @@ public class ClientController implements Initializable {
 		updateSentbox();
 	}
 
+	@FXML
+	void handleInboxSelection(MouseEvent event) {
+		inboxSelected= inboxListView.getSelectionModel().getSelectedItem().toString();
+		printToInbox(inboxSelected);
+		
+	}
+	
+	@FXML
+	void handleSentSelection(MouseEvent event) {
+		sentSelected= inboxListView.getSelectionModel().getSelectedItem().toString();
+		printToSent(sentSelected);
+		
+	}
+	
+	
+	
+	@FXML
+	void printToInbox(String subject) {
+		inboxTextArea.setText("Subject: "+ subject +"\n From:" +"\n Body:" );
+	}
+	@FXML
+	void printToSent(String subject) {
+		sentTextArea.setText("Subject: "+ inboxSelected +"\n From:" +"\n Body:" );
+	}
 	// This is the thread to update the inbox and sent box during startup
 	Thread thread1 = new Thread() {
 		public void run() {
