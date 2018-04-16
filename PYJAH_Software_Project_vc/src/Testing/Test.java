@@ -19,16 +19,17 @@ public class Test {
 	public static void main (String [] args) throws FileNotFoundException, IOException {
 		Email email = new Email();
 		email.setSender("PYJAH EMAIL");
-		email.setSubject("Welcome");
-		email.setBody("Welcome to the Pyjah Network");
-		email.setRecipient("User A");
+		email.setSubject("Welcome User B!");
+		email.setBody("Welcome to the Pyjah Network!  Enjoy our encrypted emailing system!");
+		email.setRecipient("User B");
+		email.setTime();
 		
 		User userB = new User();
-		userB.setUsername("User A");
+		userB.setUsername("User B");
 		userB.addToInbox(email);
 		
 		byte[] myByteArray = serializeUser(userB);
-		try (FileOutputStream fos = new FileOutputStream("User A.txt")) {
+		try (FileOutputStream fos = new FileOutputStream("User B.txt")) {
 			   fos.write(myByteArray);
 			   System.out.println("Stored byte");
 			   //fos.close(); There is no more need for this line since you had created the instance of "fos" inside the try. And this will automatically close the OutputStream

@@ -12,7 +12,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-
 public class Email implements Serializable {
 	/**
 	 * 
@@ -24,41 +23,40 @@ public class Email implements Serializable {
 	private String time;
 	private String body;
 	private String status = "unread";
-	
+
 	/*
-	 *  Not sure if we still need this: HashMap email contents
+	 * Not sure if we still need this: HashMap email contents
 	 */
-	
+
 	public Email() {
-		
+
 	}
+
 	public Email(String recipient, String subject, String body) {
-		this.recipient=recipient;
-		this.subject=subject;
-		this.body=body;
-		
-	}
-	
-	public Email(String sender, String recipient, String subject, String body) {
-		this.sender = sender;
-		this.recipient=recipient;
-		this.subject=subject;
-		this.body=body;
-		
-	}
-	/*public Email(String recipient, String subject, String status) {
-		/*		
-		 * This print statement is to check if the stream is receiving the Email object
-		 * System.out.println("The stream works.");
-		 *	
 		this.recipient = recipient;
 		this.subject = subject;
-		this.status = status;
-		
-	}*/
-	
+		this.body = body;
 
-	public Email(String sender, String recipient, String subject, String body, String time,String status) {
+	}
+
+	public Email(String sender, String recipient, String subject, String body) {
+		this.sender = sender;
+		this.recipient = recipient;
+		this.subject = subject;
+		this.body = body;
+
+	}
+	/*
+	 * public Email(String recipient, String subject, String status) { /* This print
+	 * statement is to check if the stream is receiving the Email object
+	 * System.out.println("The stream works.");
+	 * 
+	 * this.recipient = recipient; this.subject = subject; this.status = status;
+	 * 
+	 * }
+	 */
+
+	public Email(String sender, String recipient, String subject, String body, String time, String status) {
 		super();
 		this.sender = sender;
 		this.recipient = recipient;
@@ -68,7 +66,6 @@ public class Email implements Serializable {
 		this.status = status;
 	}
 
-
 	/**
 	 * @return the sender
 	 */
@@ -77,7 +74,8 @@ public class Email implements Serializable {
 	}
 
 	/**
-	 * @param sender the sender to set
+	 * @param sender
+	 *            the sender to set
 	 */
 	public void setSender(String sender) {
 		this.sender = sender;
@@ -91,7 +89,8 @@ public class Email implements Serializable {
 	}
 
 	/**
-	 * @param recipient the recipient to set
+	 * @param recipient
+	 *            the recipient to set
 	 */
 	public void setRecipient(String recipient) {
 		this.recipient = recipient;
@@ -105,7 +104,8 @@ public class Email implements Serializable {
 	}
 
 	/**
-	 * @param subject the subject to set
+	 * @param subject
+	 *            the subject to set
 	 */
 	public void setSubject(String subject) {
 		this.subject = subject;
@@ -119,15 +119,15 @@ public class Email implements Serializable {
 	}
 
 	/**
-	 * @param time the time to set
+	 * @param time
+	 *            the time to set
 	 */
 	public void setTime() {
-		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss a");
 		Date date = new Date();
-		this.time = dateFormat.format(date); //2016/11/16 12:08:43
+		this.time = dateFormat.format(date); // 2016/11/16 12:08:43
 
 	}
-
 
 	/**
 	 * @return the body
@@ -136,14 +136,13 @@ public class Email implements Serializable {
 		return body;
 	}
 
-
 	/**
-	 * @param body the body to set
+	 * @param body
+	 *            the body to set
 	 */
 	public void setBody(String body) {
 		this.body = body;
 	}
-
 
 	/**
 	 * @return the status
@@ -152,17 +151,16 @@ public class Email implements Serializable {
 		return status;
 	}
 
-
 	/**
-	 * @param status the status to set
+	 * @param status
+	 *            the status to set
 	 */
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	
 
 	public String toString() {
-		return "The recipient is: "+getRecipient()+"\n"+"The subject is: "+getSubject() + "\n" + "Body: " + getBody();
+		return "Subject: \"" + getSubject() +" From: \"" + getSender() + "\" At: " + getTime() +"\"";
 	}
 
 }

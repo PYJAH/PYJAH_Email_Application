@@ -134,11 +134,11 @@ public class User implements Serializable {
 
 	
 	public void addToSentBox(Email email) {
-		this.sentboxAL.add(email);
+		this.sentboxAL.add(0,email);
 	}
 	
 	public void addToInbox(Email email) {
-		this.inboxAL.add(email);
+		this.inboxAL.add(0,email);
 	}
 
 	public boolean isObjectPopulated() {
