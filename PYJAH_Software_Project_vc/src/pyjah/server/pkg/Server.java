@@ -227,6 +227,9 @@ public class Server {
 			//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 			 File file = new File("User A.txt");
 
+			// EncryptedObj data = new EncryptedObj(sealedObj, key);
+			 
+			 
 	         byte[] data = new byte[(int) file.length()];
 	         try {
 	               FileInputStream fileInputStream = new FileInputStream(file);
