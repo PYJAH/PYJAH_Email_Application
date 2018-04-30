@@ -5,14 +5,26 @@
 package pyjah.client.pkg;
 
 import java.io.EOFException;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.Calendar;
 import java.util.Date;
+
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.KeyGenerator;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.SealedObject;
+import javax.crypto.SecretKey;
 
 import org.apache.commons.lang.SerializationUtils;
 
@@ -36,6 +48,7 @@ public class Client {
 	private TextField userText;
 	private Calendar date;
 	private Email email; // = new Email("Howie", "Dude", "Test email", date, "Test Body boyyyyiiii",
+	private SecretKey secretKey;
 							// "Unread");
 	public static User user;
 	private static boolean loggedIn = false;
@@ -122,12 +135,15 @@ public class Client {
 					 */
 					
 					
-					byte[] data = (byte[]) input.readObject();
+					//byte[] data = (byte[]) input.readObject();
+					SealedObject sealedObject = (SealedObject) input.readObject();
+	    			System.out.println("\n(Client) The encrypted byte array as a sealed object looks like this: "+sealedObject+"\n");
+	    			byte[] decryptedByte = decryptObject(sealedObject);
 					
-					this.user = (User) SerializationUtils.deserialize(data);
+					this.user = (User) SerializationUtils.deserialize(decryptedByte);
 					
-					for (int i = 0; i < data.length - 1; i++) {
-						System.out.print(data[i]);
+					for (int i = 0; i < decryptedByte.length - 1; i++) {
+						System.out.print(decryptedByte[i]);
 					}
 					System.out.println("\nThis is the user serialization number");
 
@@ -147,6 +163,9 @@ public class Client {
 					// Display on the Client's GUI
 					System.out.println("\n I have no idea what the user sent!");
 
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
 
 			} while (!message.equals("Close"));
@@ -178,26 +197,31 @@ public class Client {
 	}
 
 	public void sendEmail(Email email) {
-		try {
-			output.writeObject(serializeEmail(email));
-			output.flush();
-		} catch (IOException ioException) {
-			System.out.println("\n Oops! Something went wrong!");
-		}
+//		try {
+//			output.writeObject(serializeEmail(email));
+//			output.flush();
+//		} catch (IOException ioException) {
+//			System.out.println("\n Oops! Something went wrong!");
+//		}
+		sendEncryptedByte(serializeEmail(email));
 	}
-
+	
 	public void sendUser(User user) {
-		try {
-			output.writeObject(serializeUser(user));
-			output.flush();
-		} catch (IOException ioException) {
-			System.out.println("\n Oops! Something went wrong!");
-		}
+//		try {
+//			output.writeObject(serializeUser(user));
+//			output.flush();
+//		} catch (IOException ioException) {
+//			System.out.println("\n Oops! Something went wrong!");
+//		}
+		sendEncryptedByte(serializeUser(user));
 	}
 
-	public void recieveUser() throws ClassNotFoundException, IOException {
-		byte[] data = (byte[]) input.readObject();
-		User populate = (User) SerializationUtils.deserialize(data);
+	public void recieveUser() throws Exception {
+		//byte[] data = (byte[]) input.readObject();
+		SealedObject sealedObject = (SealedObject) input.readObject();
+		System.out.println("\n(Recieve User - Client) The encrypted byte array as a sealed object looks like this: "+sealedObject);
+		byte[] decryptedByte = decryptObject(sealedObject);
+		User populate = (User) SerializationUtils.deserialize(decryptedByte);
 		this.user.setUser(populate);
 	}
 
@@ -215,7 +239,7 @@ public class Client {
 		byte[] data = SerializationUtils.serialize((Serializable) serUser);
 		return data;
 	}
-
+	
 	public boolean isLoggedIn() {
 		return loggedIn;
 	}
@@ -238,6 +262,92 @@ public class Client {
 	
 	public void setUser(User user) {
 		this.user = user;
+	}
+	
+	/*
+	 * The purpose of this method is to encrypt the byte array that we are going to send back and forth
+	 * using AES encryption and transferring it using a SealedObject
+	 * */
+	
+	public void sendEncryptedByte(byte[] data) {
+        try{
+        	
+        	secretKey = KeyGenerator.getInstance("AES").generateKey();
+        	//email.setEmailSecretKey(secretKey);
+        	
+        	writeToFile("secretkeyByte.dat", secretKey);
+        	Cipher encryptCipher = Cipher.getInstance("AES");
+        	encryptCipher.init(Cipher.ENCRYPT_MODE, secretKey);
+        	
+        	SealedObject sealedObject = new SealedObject(data, encryptCipher);
+        	
+			//writeToFile("sealed.dat", sealedObject);
+			
+        	output.writeObject(sealedObject);
+        	output.flush();
+        	
+        }catch (IOException ioException){
+            System.out.println("\n Oops! Something went wrong!");
+        } catch (NoSuchAlgorithmException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (NoSuchPaddingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (InvalidKeyException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IllegalBlockSizeException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+
+	/*
+	 * The purpose of this method is to decrypt the SealedOject that we are going to send back and forth
+	 *  through the streams using AES encryption and casting it back to a byte array.
+	 * */
+	private byte[] decryptObject(SealedObject encryptedObj) throws Exception {
+		secretKey = (SecretKey) readFromFile("secretkeyByte.dat");
+
+		if(encryptedObj != null) {
+
+			//String algorithName = encryptedObj.getAlgorithm();
+			Cipher decryptCipher = Cipher.getInstance(encryptedObj.getAlgorithm());
+			decryptCipher.init(Cipher.DECRYPT_MODE, secretKey);
+
+			byte[] decryptedObject = (byte[]) encryptedObj.getObject(decryptCipher);
+			return decryptedObject;
+		}
+
+		else
+			return null;
+	}
+	
+	/*
+	 * The purpose of this method is to write the secretkey into a file
+	 * */
+	private static void writeToFile(String filename, Object obj) throws Exception {
+	 	   try(FileOutputStream fOutput = new FileOutputStream(new File(filename));
+	 			   ObjectOutputStream output = new ObjectOutputStream(fOutput)){
+	 		   output.writeObject(obj);
+	 	   }
+	    }
+
+	/*
+	 * The purpose of this method is to read the secretkey from a file
+	 * */
+	private static Object readFromFile(String filename) throws Exception{
+		try(FileInputStream fInput = new FileInputStream(new File(filename));
+				ObjectInputStream input = new ObjectInputStream(fInput)){
+			return input.readObject();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 }

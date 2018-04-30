@@ -14,7 +14,16 @@ import java.io.PrintWriter;
 import java.io.Serializable;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.KeyGenerator;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.SealedObject;
+import javax.crypto.SecretKey;
 
 import org.apache.commons.lang.SerializationUtils;
 
@@ -34,7 +43,7 @@ public class Server {
 	private String message;
 	private TextArea console;
 	// private Email email;
-	private static User user;
+	public static User user;
 	private static User userA;
 	private static User userB;
 	public static boolean loggedIn = false;
@@ -48,6 +57,7 @@ public class Server {
 
 	 private ArrayList<Email> inboxALUserB = new ArrayList<Email>();
 	 private ArrayList<Email> sentBoxALUserB = new ArrayList<Email>();
+	private SecretKey secretKey;
 
 	public Server() {
 		// this.email = null;
@@ -131,8 +141,11 @@ public class Server {
 				 * through the Server's GUI.
 				 */
 
-				byte[] data = (byte[]) input.readObject();
-				Object obj = (Object) SerializationUtils.deserialize(data);
+				//byte[] data = (byte[]) input.readObject();
+				SealedObject sealedObject = (SealedObject) input.readObject();
+    			System.out.println("\n(Server) The encrypted byte array as a sealed object looks like this: "+sealedObject);
+    			byte[] decryptedByte = decryptObject(sealedObject);
+				Object obj = (Object) SerializationUtils.deserialize(decryptedByte);
 
 				if (obj.getClass() == Email.class) {
 					Email email1 = (Email) obj;
@@ -174,6 +187,9 @@ public class Server {
 			} catch (ClassNotFoundException classNotFoundException) {
 				// Display on the Server GUI
 				System.out.println("\n I have no idea what the user sent!");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 
 		} while (!(message.equals("CLIENT - END") || message.equals("CLIENT - end")));
@@ -340,21 +356,26 @@ public class Server {
 	}
 
 	public void sendUser(User user) {
-		try {
-			output.writeObject(serializeUser(user));
-			output.flush();
-		} catch (IOException ioException) {
-			System.out.println("\n Oops! Something went wrong!");
-		}
+//		try {
+//			output.writeObject(serializeUser(user));
+//			output.flush();
+//		} catch (IOException ioException) {
+//			System.out.println("\n Oops! Something went wrong!");
+//		}
+		sendEncryptedByte(serializeUser(user));
+		
 	}
 
 	// to accept user objects being sent from the client
-	public void recieveUser() throws ClassNotFoundException, IOException {
-		byte[] data = (byte[]) input.readObject();
-		this.user = (User) SerializationUtils.deserialize(data);
+	public void recieveUser() throws Exception {
+		//byte[] data = (byte[]) input.readObject();
+		SealedObject sealedObject = (SealedObject) input.readObject();
+		System.out.println("\n(Recieve User - Client) The encrypted byte array as a sealed object looks like this: "+sealedObject);
+		byte[] decryptedByte = decryptObject(sealedObject);
+		this.user = (User) SerializationUtils.deserialize(decryptedByte);
 
-		for (int i = 0; i < data.length - 1; i++) {
-			System.out.print(data[i]);
+		for (int i = 0; i < decryptedByte.length - 1; i++) {
+			System.out.print(decryptedByte[i]);
 		}
 		System.out.println("\n");
 
@@ -478,5 +499,91 @@ public class Server {
 		
 		
 		
+	}
+	
+	/*
+	 * The purpose of this method is to encrypt the byte array that we are going to send back and forth
+	 * using AES encryption and transferring it using a SealedObject
+	 * */
+	
+	public void sendEncryptedByte(byte[] data) {
+        try{
+        	
+        	secretKey = KeyGenerator.getInstance("AES").generateKey();
+        	//email.setEmailSecretKey(secretKey);
+        	
+        	writeToFile("secretkeyByte.dat", secretKey);
+        	Cipher encryptCipher = Cipher.getInstance("AES");
+        	encryptCipher.init(Cipher.ENCRYPT_MODE, secretKey);
+        	
+        	SealedObject sealedObject = new SealedObject(data, encryptCipher);
+        	
+			//writeToFile("sealed.dat", sealedObject);
+			
+        	output.writeObject(sealedObject);
+        	output.flush();
+        	
+        }catch (IOException ioException){
+            System.out.println("\n Oops! Something went wrong!");
+        } catch (NoSuchAlgorithmException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (NoSuchPaddingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (InvalidKeyException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IllegalBlockSizeException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+
+	/*
+	 * The purpose of this method is to decrypt the SealedOject that we are going to send back and forth
+	 *  through the streams using AES encryption and casting it back to a byte array.
+	 * */
+	private byte[] decryptObject(SealedObject encryptedObj) throws Exception {
+		secretKey = (SecretKey) readFromFile("secretkeyByte.dat");
+
+		if(encryptedObj != null) {
+
+			//String algorithName = encryptedObj.getAlgorithm();
+			Cipher decryptCipher = Cipher.getInstance(encryptedObj.getAlgorithm());
+			decryptCipher.init(Cipher.DECRYPT_MODE, secretKey);
+
+			byte[] decryptedObject = (byte[]) encryptedObj.getObject(decryptCipher);
+			return decryptedObject;
+		}
+
+		else
+			return null;
+	}
+	
+	/*
+	 * The purpose of this method is to write the secretkey into a file
+	 * */
+	private static void writeToFile(String filename, Object obj) throws Exception {
+	 	   try(FileOutputStream fOutput = new FileOutputStream(new File(filename));
+	 			   ObjectOutputStream output = new ObjectOutputStream(fOutput)){
+	 		   output.writeObject(obj);
+	 	   }
+	    }
+
+	/*
+	 * The purpose of this method is to read the secretkey from a file
+	 * */
+	private static Object readFromFile(String filename) throws Exception{
+		try(FileInputStream fInput = new FileInputStream(new File(filename));
+				ObjectInputStream input = new ObjectInputStream(fInput)){
+			return input.readObject();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }
